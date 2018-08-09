@@ -1,0 +1,42 @@
+<div *ngIf="card">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="cc-name">Name on card</label>
+      <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+      <small class="text-muted">Full name as displayed on card</small>
+      <div class="invalid-feedback">
+        Name on card is required
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="cc-number">Credit card number</label>
+      <input type="text" class="form-control" id="cc-number" name="cc-number" placeholder="" required="" [(ngModel)]="card.number">
+      <div class="invalid-feedback">
+        Credit card number is required
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 mb-3">
+      <label for="cc-expiration">Expiration Month</label>
+      <input type="text" class="form-control" id="cc-expiration-month" name="cc-expiration-month" placeholder="" required="" [(ngModel)]="card.expirationMonth">
+      <div class="invalid-feedback">
+        Expiration month required
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="cc-expiration">Expiration</label>
+      <input type="text" class="form-control" id="cc-expiration-year" name="cc-expiration-year" placeholder="" required="" [(ngModel)]="card.expirationYear">
+      <div class="invalid-feedback">
+        Expiration year required
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="cc-expiration">CVV</label>
+      <input type="text" class="form-control" id="cc-cvv" placeholder="" name="cc-cvv" required="" [(ngModel)]="card.securityCode">
+      <div class="invalid-feedback">
+        Security code required
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="container-fluid p-4">
+  <div class="row">
+    <div class="col-12 col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="media">
+            <img [src]="(me$ | async)?.SmallPhotoUrl | image : false" class="img-circle" width="45" height="45" />
+            <div class="media-body ml-3">
+              <h5 class="my-0">{{(me$ | async)?.FirstName}} {{(me$ | async)?.LastName}}</h5>
+              <small class="d-block">Last Login Date {{(me$ | async)?.LastLoginDate | date : 'short'}}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <a class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/dashboard']" [routerLinkActive]="'active'">
+            <span class="oi oi-dashboard"></span>
+            Dashboard
+          </a>
+          <a class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/orders']" [routerLinkActive]="'active'">
+            <span class="oi oi-list"></span>
+            Orders
+          </a>
+          <a class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/quotes']" [routerLinkActive]="'active'">
+            <span class="oi oi-pencil"></span>
+            Quotes
+          </a>
+          <a class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/carts']" [routerLinkActive]="'active'">
+            <span class="oi oi-cart"></span>
+            Carts
+          </a>
+          <a class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/addresses']" [routerLinkActive]="'active'">
+            <span class="oi oi-grid-two-up"></span>
+            Addresses
+          </a>
+          <a class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/catalog']" [routerLinkActive]="'active'">
+            <span class="oi oi-list-rich"></span>
+            Catalog
+          </a>
+          <a class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/settings']" [routerLinkActive]="'active'">
+            <span class="oi oi-cog"></span>
+            Settings
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-9 p-0">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

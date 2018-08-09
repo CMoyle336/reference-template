@@ -1,0 +1,108 @@
+<nav class="navbar navbar-light bg-white d-flex justify-content-between">
+  <span class="navbar-brand">
+    Product Catalog
+    <span *ngIf="(productList$ | async)?.length > 0">({{(productList$ | async)?.length}})</span>
+  </span>
+  <div>
+    <button type="button" class="btn btn-primary" (click)="newProduct(template)">New Product</button>
+  </div>
+</nav>
+
+<div *ngIf="(productList$ | async); else catalogLoading" class="card p-0 mt-3">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Product</th>
+        <th scope="col">Product Code</th>
+        <th scope="col">Created Date</th>
+        <th scope="col">List Price</th>
+        <th scope="col">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of (productList$ | async)">
+        <th scope="row">
+          <a href="javascript:void(0)" [routerLink]="['/product', product.ProductCode]">{{product.Name}}</a>
+        </th>
+        <td>{{product.ProductCode}}</td>
+        <td>{{product.CreatedDate | date : 'short'}}</td>
+        <td>{{(product | ProductPricePipe | async)?.totalPrice}}</td>
+        <td>
+          <div dropdown container="body">
+            <button class="btn btn-link p-0 dropdown-toggle" dropdownToggle [ladda]="product._metadata?.loading" data-spinner-color="black"
+              data-style="zoom-in">
+              <span class="oi oi-ellipses vertical"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+              <li role="menuitem">
+                <a class="dropdown-item" href="javascript:void(0)" (click)="editProduct(product, template)">Edit</a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" href="javascript:void(0)">Clone</a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" href="javascript:void(0)" (click)="addProductToCart(product)">Add to Cart</a>
+              </li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem">
+                <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="deleteProduct(product)">Delete</a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #catalogLoading>
+  <div class="d-flex justify-content-center py-5">
+    <apt-md-spinner></apt-md-spinner>
+  </div>
+</ng-template>
+
+<ng-template #template>
+  <form (ngSubmit)="createProduct()">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">New Product</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Name" [(ngModel)]="product.Name" name="name" />
+      </div>
+      <div class="mb-3">
+        <label for="productCode">Product Code</label>
+        <input type="text" class="form-control" id="productCode" placeholder="Product Code" [(ngModel)]="product.ProductCode" name="productCode"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="description">Description</label>
+        <textarea type="text" class="form-control" id="description" placeholder="Product Description" [(ngModel)]="product.Description"
+          name="description" rows="4"></textarea>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label for="listPrice">List Price</label>
+          <input type="number" class="form-control" placeholder="List Price" id="listPrice" [(ngModel)]="priceListItem.Apttus_Config2__ListPrice__c"
+            name="listPrice">
+        </div>
+        <div class="col">
+          <label for="contractPrice">Contract Price</label>
+          <input type="number" class="form-control" placeholder="Contract Price" id="contractPrice" [(ngModel)]="priceListItem.Apttus_Config2__ContractPrice__c"
+            name="contractPrice">
+        </div>
+      </div>
+
+      <small class="text-danger animated fadeIn" *ngIf="message">{{message}}</small>
+    </div>
+    <div class="d-flex justify-content-end modal-footer">
+      <button class="btn btn-secondary mr-2 w-25" type="button" (click)="modalRef.hide()">Cancel</button>
+      <button class="btn btn-primary w-25" type="submit" [ladda]="loading">Save</button>
+    </div>
+  </form>
+</ng-template>

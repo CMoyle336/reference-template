@@ -1,0 +1,50 @@
+<div class="container-fluid py-4" id="top">
+  <apt-breadcrumb [sobject]="category"></apt-breadcrumb>
+  <div class="row">
+    <div class="col-12 col-lg-3">
+      <div>
+        <pl-related-categories [categoryList]="(searchResults$ | async)?.relatedCategories" class="d-block mb-2" *ngIf="(searchResults$ | async)?.relatedCategories?.length > 0"
+          [categoryId]="category?.Id"></pl-related-categories>
+          
+        <pl-subcategory (onFilterChange)="onSubcategoryFilter($event)" *ngIf="subCategories?.length > 0 || (searchResults$ | async)?.subcategories?.length > 0"
+          [categoryList]="subCategories || (searchResults$ | async)?.subcategories" [categories]="categoryFilter" class="d-block mb-2"></pl-subcategory>
+
+        <pl-price-tier [data]="(searchResults$ | async)?.aggregateTotal" [tier]="priceTier" class="d-block mb-2" (onPriceChange)="onPriceTierChange($event)"></pl-price-tier>
+        <!-- <pl-field-filter [fieldName]="'APTSCU_Horsepower__c'" (fieldValueChange)="onFieldFilter($event)" class="d-block mb-2"></pl-field-filter> -->
+        <pl-field-filter [fieldName]="'Family'" (fieldValueChange)="onFieldFilter($event)" class="d-block mb-2"></pl-field-filter>
+        <pl-field-filter [fieldName]="'Apttus_Config2__ProductType__c'" (fieldValueChange)="onFieldFilter($event)" class="d-block"></pl-field-filter>
+      </div>
+    </div>
+    <div class="col-12 col-lg-9">
+      <nav class="navbar navbar-light bg-white p-0 mb-3">
+        <pl-results [recordCount]="(searchResults$ | async)?.totalRecords[0]?.total_records" [limit]="pageSize" [offset]="(page - 1) * pageSize"
+          [page]="page" [view]="view" [query]="query" (onViewChange)="view = $event" (onSortChange)="onSortChange($event)"
+          class="d-block w-100">
+        </pl-results>
+      </nav>
+
+      <div class="d-flex justify-content-center my-5 py-5" *ngIf="!(searchResults$ | async)?.productList">
+        <apt-md-spinner></apt-md-spinner>
+      </div>
+
+      <div class="row" *ngIf="view == 'grid' && (searchResults$ | async)?.productList">
+        <div class="col-12 col-sm-6 col-md-4" *ngFor="let product of (searchResults$ | async)?.productList">
+          <apt-product-card [product]="product" class="mb-3"></apt-product-card>
+        </div>
+      </div>
+      <div class="row" *ngIf="view == 'list' && (searchResults$ | async)?.productList">
+        <div class="col-12">
+          <ul class="list-unstyled list-groupo">
+            <li *ngFor="let product of (searchResults$ | async)?.productList" class="list-group-item">
+              <apt-product-card [product]="product" type="media"></apt-product-card>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="d-flex justify-content-center" *ngIf="(searchResults$ | async)?.productList">
+        <pagination *ngIf="(searchResults$ | async)" (pageChanged)="onPage($event)" [totalItems]="(searchResults$ | async)?.totalRecords[0]?.total_records"
+          [(ngModel)]="page" [boundaryLinks]="true" [itemsPerPage]="pageSize" [maxSize]="5"></pagination>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<h4 class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-muted">Your cart</span>
+    <span class="badge badge-secondary badge-pill">{{itemCount}}</span>
+</h4>
+<ul class="list-group mb-3">
+    <ng-container *ngFor="let item of cart?.Apttus_Config2__LineItems__r?.records">
+        <li class="list-group-item d-flex justify-content-between lh-condensed"  *ngIf="item.Apttus_Config2__LineType__c === 'Product/Service'" >
+            <div class="details">
+                <h6 class="my-0">
+                    {{item.Apttus_Config2__ProductId__r.Name}}
+                </h6>
+                <small class="text-muted">{{item.Apttus_Config2__ProductId__r.ProductCode}}</small>
+                <small class="text-muted">Quantity: {{item.Apttus_Config2__Quantity__c}}</small>
+                <small *ngIf="item.Apttus_Config2__ProductId__r.Apttus_Config2__HasAttributes__c || item.Apttus_Config2__ProductId__r.Apttus_Config2__HasOptions__c">
+                    <a href="javascript:void(0)" (click)="openModal(item, productDetails)">Details</a>
+                </small>
+            </div>
+            <div class="text-right">
+                <small class="text-muted strike-text d-block" *ngIf="(item | CartItemPricePipe | async)?.discountPrice > 0">{{(item | CartItemPricePipe | async)?.basePrice$ | async}}</small>
+                <span class="text-muted d-block">{{(item.Apttus_Config2__NetPrice__c > 0) ? (item.Apttus_Config2__NetPrice__c | localCurrency | async) : '-'}}</span>
+            </div>
+        </li>
+    </ng-container>
+    <li class="list-group-item">
+        <div *ngFor="let summary of cart?.Apttus_Config2__SummaryGroups__r?.records; let l = last" [class.small]="!l">
+            <div *ngIf="summary.Apttus_Config2__NetPrice__c > 0" class="d-flex justify-content-between">
+                <span>{{summary.Name}}</span>
+                <strong>{{summary.Apttus_Config2__NetPrice__c | localCurrency | async}}</strong>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<form class="card p-2">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Promo code">
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-secondary">Redeem</button>
+        </div>
+    </div>
+</form>
+
+<h4 class=" mb-3 mt-5">
+    <span class="text-muted">Configuration Summary</span>
+</h4>
+<div class="card">
+    <div class="card-body">
+        <small class="mb-3 d-block">
+            Your own personalised quote complete with an overview of all of your options. Send to an email address or download directly
+            to your device.
+        </small>
+        <small class="text-info">{{state.configurationMessage}}</small>
+        <button class="btn btn-block btn-outline-primary" (click)="generatePdf()" [ladda]="state.downloadLoading" data-style="zoom-in" data-spinner-color="black">Download</button>
+        <button class="btn btn-block btn-outline-primary">Send as Email</button>
+    </div>
+</div>
+
+<h4 class=" mb-3 mt-5">
+    <span class="text-muted">Request a Quote</span>
+</h4>
+<div class="card">
+    <div class="card-body">
+        <small class="mb-3 d-block">
+             Request a quote for your configuration and someone will be in touch to discuss next steps.
+        </small>
+        <button class="btn btn-block btn-outline-primary" [ladda]="state.requestQuoteLoading" data-style="zoom-in" (click)="createQuote()" data-spinner-color="black">Request a Quote</button>
+    </div>
+</div>
+
+<ng-template #productDetails>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{lineItem?.Apttus_Config2__ProductId__r.Name}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- <apt-output-field objectName="Apttus_Config2__ProductAttributeValue__c" fieldName="APTSCU_Aux_Power_Voltage__c" [value]="lineItem.Apttus_Config2__AttributeValueId__r['APTSCU_Aux_Power_Voltage__c']"></apt-output-field> -->
+    </div>
+</ng-template>
+
+<ng-template #confirmationTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Your quote request has been submitted.</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="confirmationModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body d-flex justify-content-center align-items-center confirmation py-5">
+    <span class="oi oi-check circle"></span>
+  </div>
+  <div class="modal-footer d-flex justify-content-center flex-wrap flex-md-nowrap">
+    <button class="btn btn-secondary d-block w-100 m-2" [routerLink]="['/']" (click)="confirmationModal.hide()">Continue Shopping</button>
+    <button class="btn btn-primary d-block w-100 m-2" (click)="confirmationModal.hide()">Quote Details</button>
+  </div>
+</ng-template>

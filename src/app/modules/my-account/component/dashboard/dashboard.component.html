@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col-12 col-md-4">
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="d-flex justify-content-between border-bottom py-2 px-3">
+                    <span>Orders</span>
+                    <h6><span class="badge badge-primary">Weekly</span></h6>
+                </div>
+                <div class="p-3">
+                    <h2 class="m-0">{{orderCount}}</h2>
+                    <small>Orders this week</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="d-flex justify-content-between border-bottom py-2 px-3">
+                <span>Quotes</span>
+                <h6>
+                    <span class="badge badge-primary">Weekly</span>
+                </h6>
+            </div>
+            <div class="p-3">
+                <h2 class="m-0">{{quoteCount}}</h2>
+                <small>Quotes this week</small>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="card">
+            <div class="card-body p-0">
+                <div class="d-flex justify-content-between border-bottom py-2 px-3">
+                    <span>Spent</span>
+                    <h6>
+                        <span class="badge badge-primary">Total</span>
+                    </h6>
+                </div>
+                <div class="p-3">
+                    <h2 class="m-0">{{spent?.totalPrice$ | async}}</h2>
+                    <small>Total Spent</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Orders by Status
+            </div>
+            <div class="card-body">
+                <canvas #orderChart id="chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Quotes by Status
+            </div>
+            <div class="card-body">
+                <canvas #quoteChart id="chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Recent Orders
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Order Name</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of orderList; let i = index">
+                            <ng-container *ngIf="i < 6">
+                                <th scope="row">
+                                    <a href="javascript:void(0)" [routerLink]="['/my-account/orders/', order.Name]">{{order.Name}}</a>
+                                </th>
+                                <td>{{(order | OrderPricePipe | async)?.totalPrice$ | async}}</td>
+                                <td>{{order.CreatedDate | date:'short'}}</td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Recent Quotes
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Quote Name</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let quote of quoteList; let i = index">
+                            <ng-container *ngIf="i < 6">
+                                <th scope="row">{{quote.Name}}</th>
+                                <td>{{quote.Discounted_Price__c | localCurrency | async}}</td>
+                                <td>{{quote.CreatedDate | date:'short'}}</td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+dl{
+    dd, dt{
+        display: inline-block;
+    }
+    dt{
+        width: 33%;
+    }
+    dd{
+        width: 66%;
+    }
+}
+.card{
+    height: 100%;
+    .card-title{
+        margin-bottom: 1rem;
+    }
+}

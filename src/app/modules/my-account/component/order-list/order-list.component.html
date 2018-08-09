@@ -1,0 +1,55 @@
+<nav class="navbar navbar-light bg-white d-flex justify-content-between">
+  <span class="navbar-brand">
+    Orders
+    <span *ngIf="(orderList$ | async)?.length > 0">({{(orderList$ | async)?.length}})</span>
+  </span>
+</nav>
+
+<div *ngIf="(orderList$ | async); else loading" class="card p-0 mt-3">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Order #</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Date</th>
+        <th scope="col"># of Items</th>
+        <th scope="col">Status</th>
+        <th scope="col">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of (orderList$ | async)">
+        <th scope="row">
+         <a href="javascript:void(0)" [routerLink]="['/my-account', 'orders', order.Name]">{{order.Name}}</a></th>
+        <td>{{order?.Total_Order_Amount__c | localCurrency | async}}</td>
+        <td>{{order.CreatedDate | date : 'short'}}</td>
+        <td>{{order.Apttus_Config2__OrderLineItems__r?.totalSize}}</td>
+        <td>
+          <span class="badge w-75" 
+            [class.badge-secondary]="order.Apttus_Config2__Status__c === 'Pending'" 
+            [class.badge-info]="order.Apttus_Config2__Status__c === 'Processing' || order.Apttus_Config2__Status__c === 'Activated' || order.Apttus_Config2__Status__c === 'Fulfilled'"
+            [class.badge-success]="order.Apttus_Config2__Status__c === 'Completed'" 
+            [class.badge-danger]="order.Apttus_Config2__Status__c === 'Cancelled' || order.Apttus_Config2__Status__c === 'Superseded'">{{order.Apttus_Config2__Status__c}}</span>
+        </td>
+        <td>
+          <div dropdown container="body">
+            <button class="btn btn-link p-0 dropdown-toggle" dropdownToggle [ladda]="order._metadata?.state === 'processing'" data-spinner-color="black"
+              data-style="zoom-in">
+              <span class="oi oi-ellipses vertical"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+              <li role="menuitem">
+                <a class="dropdown-item" href="#">Reorder</a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #loading>
+  <div class="d-flex justify-content-center py-5">
+    <apt-md-spinner></apt-md-spinner>
+  </div>
+</ng-template>

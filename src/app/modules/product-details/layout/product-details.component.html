@@ -1,0 +1,98 @@
+<div class="py-4 container-fluid">
+  <apt-breadcrumb [sobject]="product"></apt-breadcrumb>
+
+  <div class="row" *ngIf="product && rules; else loading">
+    <div class="col-12 col-md-4">
+      <product-images [product]="product"></product-images>
+    </div>
+    <div class="col-12 col-md-8">
+      <div class="card animated fadeIn" *ngIf="product">
+        <div class="card-body">
+          <div class="d-flex justify-content-between flex-wrap">
+            <h4>{{product?.Name}}</h4>
+            <span *ngIf="replacementRules?.length !== 0">
+              <span class="oi oi-warning mr-2"></span> This item has been replaced by {{replacementRules?.length}} new variations.
+            </span>
+          </div>
+          
+
+          <div class="d-flex justify-content-begin align-items-center">
+            <!-- <star-rating [starType]="'icon'" [rating]="product.Rating_Score__c" *ngIf="product"></star-rating> -->
+            <small>{{product?.ProductCode}}</small>
+          </div>
+
+
+          <div class="mt-4 d-flex justify-content-between flex-wrap align-items-center">
+            <h3 class="d-flex justify-content-start align-items-center">
+              <price [product]="product"></price>
+            </h3>
+            <apt-add-to-cart [product]="product" class="w-50" rollbackOnFail="false" [disabled]="replacementRules?.length !== 0" (onAddToCart)="onAddToCart($event)"></apt-add-to-cart>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-3 animated fadeIn" *ngIf="product">
+        <div class="card-body">
+          <tabset [justified]="true" (click)="changeTab()">
+            <tab heading="Description">
+              <div class="py-3">
+                <p [innerHTML]="product?.Description" class="p-2"></p>
+              </div>
+
+              <!-- <pdp-rules [productList]="(includedProducts$ | async)" *ngIf="(includedProducts$ | async)?.length > 0" title=""
+                  type="Inclusion"></pdp-rules>
+                <pdp-rules [productList]="(recommendedProducts$ | async)" *ngIf="(recommendedProducts$ | async)?.length > 0" title=""
+                  type="Recommendation"></pdp-rules> -->
+            </tab>
+            <tab heading="Features">
+              <div class="py-3">
+                <pdp-tab-features [product]="product"></pdp-tab-features>
+              </div>
+            </tab>
+            <tab heading="Product Reviews">
+              <div class="py-3">
+                <apt-product-reviews [productId]="product.Id"></apt-product-reviews>
+              </div>
+            </tab>
+            <tab heading="Replacement Products" *ngIf="replacementRules?.length > 0">
+              <apt-product-replacements [productList]="replacementProducts$ | async"></apt-product-replacements>
+            </tab>
+            <tab heading="Volume Discounts" class="py-3" *ngIf="volumeDiscounts">
+              <table class="table table-sm table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" class="border-top-0">Quantity</th>
+                    <th scope="col" class="border-top-0">Discount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let matrix of volumeDiscounts; let i = index">
+                    <ng-container *ngIf="matrix.Apttus_Config2__AdjustmentAmount__c > 0">
+                      <td>
+                        {{matrix.Apttus_Config2__Dimension1Value__c}}+
+                      </td>
+                      <td>
+                        {{matrix.Apttus_Config2__AdjustmentAmount__c}} {{matrix.Apttus_Config2__AdjustmentType__c}}
+                      </td>
+                    </ng-container>
+                  </tr>
+                </tbody>
+              </table>
+            </tab>
+          </tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <div class="d-flex justify-content-center pt-5">
+      <apt-md-spinner></apt-md-spinner>
+    </div>
+  </ng-template>
+
+  <div *ngIf="product && (relatedProducts$ | async)?.length > 0">
+    <h4 class="mt-5">Related Products</h4>
+    <apt-product-carousel [productList]="(relatedProducts$ | async)" slides="4"></apt-product-carousel>
+  </div>
+
+</div>

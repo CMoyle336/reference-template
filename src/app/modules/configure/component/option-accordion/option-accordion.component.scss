@@ -1,0 +1,32 @@
+@import "../../../../../variables";
+
+:host{
+    display: block;
+}
+img{
+    max-height: 8rem;
+    max-width: 100%;
+}
+.img-container{
+    height: 6rem;
+}
+
+.custom-checkbox-lg{
+    .custom-control-label::before, .custom-control-label::after{
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    margin-top: -10px;
+}
+
+.options{
+    .card{
+        width: 16rem;
+        max-width: 96%;
+        box-shadow: $box-shadow;
+        .card-title{
+            height: 52px;
+            overflow-y: hidden;
+        }
+    }
+}

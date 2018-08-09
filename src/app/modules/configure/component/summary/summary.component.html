@@ -1,0 +1,75 @@
+<div class="p-3">
+  <div class="d-flex justify-content-between mb-3">
+    <span class="text-muted">STARTING MSRP</span>
+    <span class="text-muted">{{(product | ProductPricePipe | async)?.totalPrice}}</span>
+  </div>
+  <div *ngFor="let optionGroup of product?.Apttus_Config2__OptionGroups__r?.records">
+    <div *ngIf="hasOptions(optionGroup)">
+      <span class="text-muted">
+        {{optionGroup.Apttus_Config2__OptionGroupId__r.Name}}
+        <a href="javascript:void(0)" class="ml-2">
+          <small class="oi oi-pencil"></small>
+        </a>
+      </span>
+      <div *ngFor="let option of productOptions" class="mt-3">
+
+        <div *ngIf="option.productOptionComponent.Apttus_Config2__ProductOptionGroupId__c === optionGroup.Id">
+          <div class="d-flex align-items-center">
+            <img class="mr-3" [src]="sanitizer.bypassSecurityTrustUrl(option.productOptionComponent.Apttus_Config2__ComponentProductId__r.Apttus_Config2__IconId__c | image)"
+              width="50" alt="Generic placeholder image" *ngIf="option.productOptionComponent.Apttus_Config2__ComponentProductId__r.Apttus_Config2__IconId__c">
+            <small class="mr-auto">{{option.productOptionComponent.Apttus_Config2__ComponentProductId__r.Name}}</small>
+          </div>
+        </div>
+      </div>
+      <hr/>
+    </div>
+  </div>
+  <div *ngFor="let member of productAttributes">
+    <div *ngIf="member.productAttributeList?.length > 0">
+      <div class="text-muted mb-2">
+        {{member.groupMember.Apttus_Config2__AttributeGroupId__r.Name}}
+        <a href="javascript:void(0)" class="ml-2">
+          <small class="oi oi-pencil"></small>
+        </a>
+      </div>
+      <div *ngFor="let attribute of member.productAttributeList">
+        <div *ngIf="member.attributeValue[attribute.Apttus_Config2__Field__c]" class="mb-3 d-flex justify-content-between align-items-end">
+          <div>
+            <div>{{attribute._describe.label}}</div>
+            <small>{{member.attributeValue[attribute.Apttus_Config2__Field__c]}}</small>
+          </div>
+          <small class="text-muted">{{(member.attributeValue[attribute.Apttus_Config2__Field__c] | AttributeValuePricePipe :product :attribute | async)?.totalPrice}}</small>
+        </div>
+      </div>
+      <hr/>
+    </div>
+  </div>
+
+  <div *ngIf="additionalProducts && additionalProducts.length > 0">
+    <div class="text-muted">
+      Additional Products
+      <a href="javascript:void(0)" class="ml-2">
+        <small class="oi oi-pencil"></small>
+      </a>
+    </div>
+    <div *ngFor="let product of additionalProducts" class="mt-3">
+      <div class="d-flex align-items-center">
+        <img class="mr-3" [src]="sanitizer.bypassSecurityTrustUrl(product.Apttus_Config2__IconId__c | image)" width="50" height="50" alt="Generic placeholder image">
+        <div class="mr-auto">
+          {{product.Name}}
+          <small class="d-block">{{product.ProductCode}}</small>
+        </div>
+        <small class="text-muted">
+          {{(product | ProductPricePipe | async)?.totalPrice}}
+        </small>
+      </div>
+    </div>
+    <hr/>
+  </div>
+  
+  
+  <div class="d-flex justify-content-between">
+    <h5>Total Build</h5>
+    <strong>{{(totalPrice() | async)?.totalPrice | localCurrency | async}}</strong>
+  </div>
+</div>

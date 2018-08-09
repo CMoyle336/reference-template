@@ -1,0 +1,77 @@
+<nav class="navbar navbar-light bg-white d-flex justify-content-between">
+  <span class="navbar-brand">
+    Addresses
+    <span *ngIf="(addressList$ | async)?.length > 0">({{(addressList$ | async)?.length}})</span>
+  </span>
+  <div>
+    <button type="button" class="btn btn-primary" (click)="newAddress(template)">New Address</button>
+  </div>
+</nav>
+
+<div class="row mt-3" *ngIf="(addressList$ | async); else spinner">
+  <div class="col-12 col-sm-6 col-md-4" *ngFor="let address of addressList$ | async">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <strong>
+            <span class="oi oi-check" *ngIf="address.Apttus_Config2__IsDefault__c"></span>
+            {{address.Name}}
+          </strong>
+          <div class="btn-group info" dropdown>
+            <button class="btn btn-icon btn-link dropdown-toggle" dropdownToggle>
+              <span class="oi oi-ellipses vertical"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+              <li role="menuitem">
+                <a class="dropdown-item" href="javascript:void(0)" (click)="edit(address, template)">Edit</a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" href="javascript:void(0)" (click)="setAsDefault(address)">Set as Default</a>
+              </li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem">
+                <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="deleteAddress(address)">Delete</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <address>
+          <br> {{address.Apttus_Config2__Street__c}}
+          <br> {{address.Apttus_Config2__City__c}}, {{address.Apttus_Config2__State__c}} {{address.Apttus_Config2__PostalCode__c}}
+          <br> {{address.Apttus_Config2__Country__c}}
+        </address>
+        <small class="card-subtitle mt-2 text-muted">{{address.CreatedDate | date : 'short'}}</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <form (ngSubmit)="saveAddress()">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left" *ngIf="!addressEdit.Id">New Address</h4>
+      <h4 class="modal-title pull-left" *ngIf="addressEdit.Id">Edit {{addressEdit.Name}}</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" *ngIf="addressEdit">
+      <div class="mb-3">
+        <label for="addressName">Name</label>
+        <input type="text" class="form-control" id="addressName" placeholder="Name" [(ngModel)]="addressEdit.Name" name="addressName">
+      </div>
+      <apt-address [(ngModel)]="addressEdit" name="addressInput"></apt-address>
+      <small class="text-danger animated fadeIn" *ngIf="message">{{message}}</small>
+    </div>
+    <div class="d-flex justify-content-end modal-footer">
+      <button class="btn btn-secondary mr-2 w-25" type="button" (click)="modalRef.hide()">Cancel</button>
+      <button class="btn btn-primary w-25" type="submit" [ladda]="loading">Save</button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #spinner>
+  <div class="d-flex justify-content-center py-5">
+    <apt-md-spinner></apt-md-spinner>
+  </div>
+</ng-template>

@@ -1,8 +1,37 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+
+import { SalesforceModule } from 'ng-salesforce';
+import { CommerceModule } from '@apttus/ecommerce';
+import { Configuration } from './salesforce.config';
+import { ComponentModule } from './components/component.module';
+import { RouteGuard } from './services/route.guard';
+import { AuthGuard } from './services/auth.guard';
+import { ConfigureGuard } from './services/configure.guard';
+
+// Register locale data
+import localeMx from '@angular/common/locales/es-MX';
+import localeMxExtra from '@angular/common/locales/extra/es-MX';
+import { registerLocaleData } from '@angular/common';
+
+// Service Worker
+// import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+
+// Analytics
+import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
+import { Angulartics2GoogleAnalyticsEnhancedEcommerce } from 'angulartics2/ga-enhanced-ecom';
+
+registerLocaleData(localeMx, 'es-MX', localeMxExtra);
+export function _window(): any {
+  // return the global native browser window object
+  return window;
+}
+
 
 @NgModule({
   declarations: [
@@ -10,9 +39,15 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SalesforceModule.forRoot(
+      Configuration
+    ),
+    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics, Angulartics2GoogleAnalyticsEnhancedEcommerce]),
+    CommerceModule.forRoot('TIER1 Hardware and Software'),
+    ComponentModule
   ],
-  providers: [],
+  providers: [RouteGuard, AuthGuard, ConfigureGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

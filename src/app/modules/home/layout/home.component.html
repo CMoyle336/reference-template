@@ -1,0 +1,23 @@
+<div>
+    <apt-jumbotron [storefront]="storefront$ | async" imagePosition="left" height="32rem;" class="animated fadeIn" class="d-block bg-info" brightness="80"></apt-jumbotron>
+    <div class="container py-5">
+        <div *ngIf="categories">
+            <div *ngIf="productListA$ | async" class="animated fadeIn">
+                <h3>{{categories[0]?.Name}}</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tincidunt quam massa, a commodo orci finibus
+                    rhoncus. Nullam tempor, libero vel auctor efficitur, nibh lacus luctus orci, vitae fringilla lorem magna
+                    at metus.</p>
+                <apt-product-carousel [productList]="productListA$ | async" slides="4"></apt-product-carousel>
+            </div>
+
+            <div *ngIf="productListB$ | async" class="animated fadeIn">
+                <h3 class="mt-5">{{categories[1]?.Name}}</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tincidunt quam massa, a commodo orci finibus
+                    rhoncus. Nullam tempor, libero vel auctor efficitur, nibh lacus luctus orci, vitae fringilla lorem magna
+                    at metus.</p>
+                <apt-product-carousel [productList]="productListB$ | async" slides="4"></apt-product-carousel>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

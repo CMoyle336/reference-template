@@ -1,0 +1,12 @@
+<li class="nav-item active" ngbDropdown placement="bottom-right">
+  <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+    {{(selectedAccount$ | async)?.Name}}
+  </a>
+  <div ngbDropdownMenu>
+      <button class="dropdown-item" 
+      *ngFor="let account of (account$ | async).ChildAccounts?.records" 
+      (click)="setAccount(account)">
+        {{account?.Name}}
+      </button>
+  </div>
+</li>

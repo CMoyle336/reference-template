@@ -1,0 +1,79 @@
+<nav class="navbar navbar-light bg-white d-flex justify-content-between">
+    <span class="navbar-brand">
+      Quote {{(quote$ | async)?.Name}}
+    </span>
+    <button class="btn btn-outline-primary">Download Draft</button>
+  </nav>
+  
+  <div *ngIf="(quote$ | async); else loading">
+    <div class="row mt-3">
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Account</h5>
+            {{(quote$ | async)?.Apttus_Proposal__Account__r?.Name}}<br/>
+            {{(quote$ | async)?.Apttus_Proposal__Primary_Contact__r.FirstName}} {{(quote$ | async)?.Apttus_Proposal__Primary_Contact__r.LastName}}
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Quote Summary</h5>
+              <dl>
+                <dt>Approval Stage</dt>
+                <dd>{{(quote$ | async)?.Apttus_Proposal__Approval_Stage__c</dd>
+    
+                <dt>Presented Date:</dt>
+                <dd>{{(quote$ | async)?.Apttus_Proposal__Presented_Date__c}}</dd>
+    
+                <dt>Price:</dt>
+                <dd>{{(quote$ | async)?.Apttus_Proposal__Net_Amount__c | localCurrency | async}}
+              </dl>
+            </div>
+          </div>
+        </div>
+    </div>
+  
+    <!-- <div class="row mt-3">
+      <div class="col-12">
+        <div class="card p-0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Items</th>
+                <th scope="col">Your Price</th>
+                <th scope="col" class="text-center">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let lineItem of (quote$ | async)?.Apttus_Config2__OrderLineItems__r?.records">
+                <th scope="row">
+                  <div class="media align-items-stretch">
+                    <img class="mr-3" [src]="lineItem.Apttus_Config2__ProductId__r.Apttus_Config2__IconId__c | image" width="75" height="60" alt="Generic placeholder image">
+                    <div class="media-body d-flex flex-column justify-content-between">
+                      <div>
+                        <h6 class="m-0">{{lineItem.Apttus_Config2__ProductId__r?.Name}}</h6>
+                        <small><strong>Product Code:</strong>&nbsp;{{lineItem.Apttus_Config2__ProductId__r.ProductCode}}</small>
+                      </div>
+                    </div>
+                  </div>
+                </th>
+                <td>{{(lineItem | CartItemPricePipe | async)?.totalPrice$ | async}}</td>
+                <td class="text-center">
+                  <span class="badge badge-light p-3 text-muted">{{lineItem.Apttus_Config2__Quantity__c}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>  
+      </div>
+    </div> -->
+  
+  </div>
+  
+  <ng-template #loading>
+    <div class="d-flex justify-content-center py-5">
+      <apt-md-spinner></apt-md-spinner>
+    </div>
+  </ng-template>

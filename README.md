@@ -1,6 +1,19 @@
 # ReferenceBase
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
+This is the base reference application for the apttus ecommerce product. Follow the below instructions to get started. See https://cmoyle336.github.io/sdk-docs/overview.html for more detailed instructions on interacting with
+the underlying SDK.
+
+## Deploy the unmanaged package
+Find the zip file named 'unmanaged-package.zip' and deploy it to your org. (Will become a managed package in the near future)
+
+## Install the application
+In a terminal window run
+```bash
+npm install
+```
+
+## Setup the proxy for local development
+In the root directory, there is a file named 'proxy.config.json'. This allows you to make SOAP API calls from your local development server (for functionality like login and reprice cart). Populate the 'target' attributes in that file with the instance url of your community.
 
 ## Development server
 

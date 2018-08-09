@@ -7,7 +7,9 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "node node_modules/ng-salesforce/scripts/deploy-script.js",
+    "setup": "node node_modules/ng-salesforce/scripts/setup-script.js"
   },
   "private": true,
   "dependencies": {
@@ -20,8 +22,14 @@
     "@angular/platform-browser": "^6.0.0",
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/router": "^6.0.0",
+    "@apttus/ecommerce": "^0.1.2100",
+    "angulartics2": "^6.2.0",
+    "chart.js": "^2.7.2",
     "core-js": "^2.5.4",
+    "open-iconic": "^1.1.1",
+    "roboto-fontface": "^0.10.0",
     "rxjs": "^6.0.0",
+    "slick-carousel": "^1.8.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

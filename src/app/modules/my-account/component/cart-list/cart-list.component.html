@@ -1,0 +1,94 @@
+<nav class="navbar navbar-light bg-white d-flex justify-content-between">
+  <span class="navbar-brand">
+    Carts
+    <span *ngIf="cartList?.length > 0">({{(cartAggregate$ | async)?.total_records}})</span>
+  </span>
+  <div>
+    <button type="button" class="btn btn-primary" (click)="newCart(template)">New Cart</button>
+  </div>
+</nav>
+
+<div *ngIf="cartList; else spinner" class="card p-0 mt-3">
+  <table class="table table-striped table-responsive-sm">
+    <thead>
+      <tr>
+        <th scope="col">Cart Name</th>
+        <th scope="col">Created Date</th>
+        <th scope="col">Number of Items</th>
+        <th scope="col">Total Amount</th>
+        <th scope="col" class="text-center">Is Active</th>
+        <th scope="col">Status</th>
+        <th scope="col">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cart of cartList; let i = index;" [class.table-success]="cart.Id === myCart?.Id">
+        <th scope="row">{{cart.Name}}</th>
+        <td>{{cart.CreatedDate | date : 'short'}}</td>
+        <td>{{cart.Apttus_Config2__NumberOfItems__c}}</td>
+        <td>{{(cart | CartPricePipe | async)?.totalPrice$ | async}}</td>
+        <td class="text-center">
+          
+          <span class="oi oi-circle-check" *ngIf="cart.Id === myCart?.Id"></span>
+        </td>
+        <td>
+          <span class="badge w-75" [class.badge-secondary]="cart.Apttus_Config2__Status__c === 'New'" 
+                      [class.badge-info]="cart.Apttus_Config2__Status__c !== 'New' && cart.Apttus_Config2__Status__c !== 'Finalized' && cart.Apttus_Config2__Status__c !== 'Abandoned' && cart.Apttus_Config2__Status__c !== 'Approval Required'"
+                      [class.badge-success]="cart.Apttus_Config2__Status__c === 'Finalized'" 
+                      [class.badge-warning]="cart.Apttus_Config2__Status__c === 'Approval Required'"
+                      [class.badge-danger]="cart.Apttus_Config2__Status__c === 'Abandoned'">{{cart.Apttus_Config2__Status__c}}</span>
+        </td>
+        <td>
+          <div dropdown container="body">
+            <button class="btn btn-link p-0 dropdown-toggle" dropdownToggle [ladda]="cart._metadata?.state === 'processing'" data-spinner-color="black"
+              data-style="zoom-in">
+              <span class="oi oi-ellipses vertical"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+              <li role="menuitem" *ngIf="cart.Id !== myCart?.Id && (cart.Apttus_Config2__Status__c === 'New' || cart.Apttus_Config2__Status__c === 'Approval Required' || cart.Apttus_Config2__Status__c === 'Ready For Finalization')">
+                <a class="dropdown-item" href="javascript:void(0)" (click)="setCartActive(cart)">Set Active</a>
+              </li>
+              <li role="menuitem">
+                <a class="dropdown-item" href="#">Clone</a>
+              </li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem">
+                <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="deleteCart(cart)">Delete</a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex justify-content-center mt-3" *ngIf="(cartAggregate$ | async)">
+  <pagination [totalItems]="(cartAggregate$ | async)?.total_records" [(ngModel)]="currentPage" (pageChanged)="loadCarts($event.page)"></pagination>
+</div>
+<ng-template #spinner>
+  <div class="d-flex justify-content-center py-5">
+    <apt-md-spinner></apt-md-spinner>
+  </div>
+</ng-template>
+
+<ng-template #template>
+  <form (ngSubmit)="createCart()">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">New Cart</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="addressName">Name</label>
+        <input type="text" class="form-control" id="addressName" placeholder="Name" [(ngModel)]="cart.Name" name="cartName">
+      </div>
+      <small class="text-danger animated fadeIn" *ngIf="message">{{message}}</small>
+    </div>
+    <div class="d-flex justify-content-end modal-footer">
+      <button class="btn btn-secondary mr-2 w-25" type="button" (click)="modalRef.hide()">Cancel</button>
+      <button class="btn btn-primary w-25" type="submit" [ladda]="loading">Save</button>
+    </div>
+  </form>
+</ng-template>

@@ -1,0 +1,40 @@
+<div>
+  <div class="list-group">
+    <div class="list-group-item d-flex" *ngFor="let product of productList">
+      <div class="flex-grow-1">
+        <h5 class="mb-1">{{product.Name}}</h5>
+        <small class="text-muted">{{(product | ProductPricePipe | async)?.totalPrice}}</small>
+        <p class="my-3">{{product.Description}}</p>
+        <small>
+          <a href="javascript:void(0)" (click)="addProduct(product)" class="text-secondary" *ngIf="!containsProduct(product)">
+              <span class="oi oi-plus"></span>ADD
+          </a>
+          <span (mouseenter)="hoverProduct = product" (mouseleave)="hoverProduct = null" *ngIf="containsProduct(product)">
+            <a href="javascript:void(0)" class="text-success" *ngIf="hoverProduct !== product">
+              <span class="oi oi-circle-check"></span>INCLUDED
+            </a>
+            <a href="javascript:void(0)" (click)="removeProduct(product)" class="text-danger" *ngIf="hoverProduct === product">
+              <span class="oi oi-minus"></span>REMOVE
+            </a>
+          </span>
+          
+        </small>
+      </div>
+      <img width="40" height="40" [src]="product.Apttus_Config2__IconId__c | image" class="flex-shrink-1" [alt]="product.Name">
+    </div>
+  </div>
+
+
+  <!-- <ul class="list-unstyled p">
+    <li class="media my-4" *ngFor="let product of productList">
+      <div class="w-25">
+        <img class="mr-3" height="100" [src]="product.Apttus_Config2__IconId__c | image" [alt]="product.Name">
+      </div>
+      
+      <div class="media-body">
+        <h5 class="mt-0 mb-1">{{product?.Name}}</h5>
+        <small>{{product?.ProductCode}}</small>
+      </div>
+    </li>
+  </ul> -->
+</div>

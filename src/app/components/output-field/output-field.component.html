@@ -1,0 +1,4 @@
+<ng-container *ngIf="field$ | async">
+  <strong class="mr-2">{{(field$ | async).label}}</strong>
+  <span>{{value}}</span>
+</ng-container>

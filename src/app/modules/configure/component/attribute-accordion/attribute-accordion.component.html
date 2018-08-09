@@ -1,0 +1,29 @@
+<div id="attributeAccordion" *ngIf="product?.Apttus_Config2__AttributeGroups__r?.totalSize > 0">
+  <div class="card" *ngFor="let attributeMap of productAttributeMap; let i = index">
+    <div class="card-header">
+      <h5 class="mb-0">
+        <button class="btn btn-link d-flex justify-content-between btn-block" data-toggle="collapse" [attr.data-target]="'#' + attributeMap.groupMember.Id">
+            {{attributeMap.groupMember.Apttus_Config2__AttributeGroupId__r.Name}}
+        </button>
+      </h5>
+    </div>
+
+    <div [id]="attributeMap.groupMember.Id" class="collapse" [class.show]="i === 0" data-parent="#attributeAccordion" #attributeCollapse>
+      <div class="card-body">
+        <div class="row">
+            <div class="col-12" 
+              [class.col-md-4]="attribute?.Apttus_Config2__AttributeGroupId__r?.Apttus_Config2__ThreeColumnAttributeDisplay__c" 
+              [class.col-md-6]="attribute?.Apttus_Config2__AttributeGroupId__r?.Apttus_Config2__TwoColumnAttributeDisplay__c"
+                *ngFor="let attribute of attributeMap.productAttributeList">
+              
+              <apt-input-field [field]="attribute['_describe']" 
+                [(ngModel)]="attributeMap.attributeValue[attribute?.Apttus_Config2__Field__c]"
+                small="true"
+                (change)="valueChange()"
+                [product]="product"></apt-input-field>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+@import "../../../../variables";
+
+
+.navbar.fixed-top{
+    top: $navbar-brand-height;
+    box-shadow: $box-shadow;
+    z-index: 1001;
+}
+
+.headerContainer{
+    height: 93px;
+}

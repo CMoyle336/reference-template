@@ -1,0 +1,14 @@
+{
+    "/services/Soap/*": {
+        "target": "https://apttuscommunities-xxxx.force.com/ecomm",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    },
+    "/ecomm/*": {
+        "target": "https://apttuscommunities-xxxx.force.com",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    }
+}
