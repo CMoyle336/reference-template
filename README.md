@@ -12,10 +12,22 @@ In a terminal window run
 npm install
 ```
 
-## Deploy to your salesforce org
-In a terminal window run
-```bash
-npm run deploy
+## Sentry Logging
+Sentry will be installed and running and, if you run into errors, you may see a popup asking for feedback. You can disable this in your src/app/salesforce.config.ts file with the following flags:
+
+```json
+{
+    enableErrorLogging : true/false
+    enableErrorReporting: true/false
+}
+```
+
+## Enable/disable localization
+If you do not have multi-currency enabled in your org, you must turn off multi-currency support in your storefront in the src/app/salesforce.config.ts file.
+```json
+{
+    enableMultiCurrency : true/false
+}
 ```
 
 ## Setup the proxy for local development
@@ -28,6 +40,13 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Deploy to your salesforce org
+In a terminal window run
+```bash
+npm run deploy
+```
+
 
 ## Build
 
