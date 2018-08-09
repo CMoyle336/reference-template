@@ -17,8 +17,8 @@ Sentry will be installed and running and, if you run into errors, you may see a 
 
 ```json
 {
-    enableErrorLogging : true/false
-    enableErrorReporting: true/false
+    enableErrorLogging : false
+    enableErrorReporting: false
 }
 ```
 
@@ -26,7 +26,7 @@ Sentry will be installed and running and, if you run into errors, you may see a 
 If you do not have multi-currency enabled in your org, you must turn off multi-currency support in your storefront in the src/app/salesforce.config.ts file.
 ```json
 {
-    enableMultiCurrency : true/false
+    enableMultiCurrency : false
 }
 ```
 
