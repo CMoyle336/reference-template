@@ -1,4 +1,4 @@
-# ReferenceBase
+# Digital Commerce Core Reference Template
 
 This is the base reference application for the apttus ecommerce product. Follow the below instructions to get started. See https://cmoyle336.github.io/sdk-docs/overview.html for more detailed instructions on interacting with
 the underlying SDK.
@@ -10,6 +10,12 @@ Find the zip file named 'unmanaged-package.zip' and deploy it to your org. (Will
 In a terminal window run
 ```bash
 npm install
+```
+
+## Deploy to your salesforce org
+In a terminal window run
+```bash
+npm run deploy
 ```
 
 ## Setup the proxy for local development
