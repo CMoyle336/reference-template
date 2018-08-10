@@ -6,7 +6,6 @@ import { Observable } from 'rxjs/Rx';
 
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { Angulartics2 } from 'angulartics2';
 
 @Component({
   selector: 'app-header',
@@ -36,7 +35,6 @@ export class HeaderComponent implements OnInit {
               private storefrontService: StorefrontService,
               private userService: UserService,
               private conversionService: ConversionService,
-              private angulartics2: Angulartics2,
               private router: Router,
               private productService: ProductService,
               private contactService: ContactService,
@@ -115,13 +113,6 @@ export class HeaderComponent implements OnInit {
 
   doLogout(){
     this.profile.doLogout();
-  }
-
-  onRegister(user: User){
-    this.angulartics2.eventTrack.next({
-      action: 'register-submit',
-      properties: user,
-    });
   }
 
   @HostListener('window:scroll', ['$event'])

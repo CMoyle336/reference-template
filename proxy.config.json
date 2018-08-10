@@ -1,12 +1,12 @@
 {
     "/services/Soap/*": {
-        "target": "https://apttuscommunities-xxxx.force.com/ecomm",
+        "target": "https://apttuscommunities-163960c9372.force.com/ecomm",
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true
     },
     "/ecomm/*": {
-        "target": "https://apttuscommunities-xxxx.force.com",
+        "target": "https://apttuscommunities-163960c9372.force.com",
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true

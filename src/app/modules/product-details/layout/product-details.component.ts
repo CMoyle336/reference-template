@@ -3,8 +3,6 @@ import { ProductService, Product, ConstraintRuleService, ProductReview, Constrai
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
-import { Angulartics2GoogleAnalyticsEnhancedEcommerce } from 'angulartics2/ga-enhanced-ecom';
-declare var ga: Function;
 
 @Component({
   selector: 'app-product-details',
@@ -24,7 +22,6 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private productService: ProductService,
-              private at: Angulartics2GoogleAnalyticsEnhancedEcommerce,
               private cdr: ChangeDetectorRef,
               private priceMatrixService: PriceMatrixService,
               private constraintRuleService: ConstraintRuleService) { }
@@ -46,7 +43,6 @@ export class ProductDetailsComponent implements OnInit {
 
 
   onProductLoad(product: Product){
-    this.analytics(product);
     this.product = product;
     this.relatedProducts$ = this.productService.getProductsByCategory(_.get(product, 'Apttus_Config2__Categories__r.records[0].Apttus_Config2__ClassificationId__r.Apttus_Config2__AncestorId__c'));
     this.constraintRuleService.getConstraintRules(product).take(1).subscribe(rules => {
@@ -72,26 +68,6 @@ export class ProductDetailsComponent implements OnInit {
 
   changeTab($evt){
     this.cdr.detectChanges();
-  }
-
-  onAddToCart(evt){
-    const fieldObject = {
-      id: evt.product.ProductCode, name: evt.product.Name, category: _.get(evt, 'product.Apttus_Config2__Categories__r.records[0].Apttus_Config2__ClassificationId__r.Name'), brand: evt.product.Family, position: 1,
-      price : evt.price,
-      quantity: evt.quantity
-    };
-    this.at.ecAddProduct(fieldObject);
-    this.at.ecSetAction('add', {revenue : evt.price});
-    ga('send', 'pageview');
-  }
-
-  analytics(product: Product){
-    const fieldObject = {
-      id: product.ProductCode, name: product.Name, category: _.get(product, 'Apttus_Config2__Categories__r.records[0].Apttus_Config2__ClassificationId__r.Name'), brand: product.Family, position: 1
-    };
-    this.at.ecAddProduct(fieldObject);
-    this.at.ecSetAction('detail', {});
-    ga('send', 'pageview');
   }
 
 }

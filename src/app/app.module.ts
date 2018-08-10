@@ -21,11 +21,6 @@ import { registerLocaleData } from '@angular/common';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
-// Analytics
-import { Angulartics2Module } from 'angulartics2';
-import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
-import { Angulartics2GoogleAnalyticsEnhancedEcommerce } from 'angulartics2/ga-enhanced-ecom';
-
 registerLocaleData(localeMx, 'es-MX', localeMxExtra);
 export function _window(): any {
   // return the global native browser window object
@@ -43,7 +38,6 @@ export function _window(): any {
     SalesforceModule.forRoot(
       Configuration
     ),
-    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics, Angulartics2GoogleAnalyticsEnhancedEcommerce]),
     CommerceModule.forRoot('TIER1 Hardware and Software'),
     ComponentModule
   ],

@@ -5,8 +5,6 @@ import { PageScrollService, PageScrollInstance } from 'ngx-page-scroll';
 import { DOCUMENT} from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { FieldFilter } from '../component/field-filter.component';
-import { Angulartics2GoogleAnalyticsEnhancedEcommerce } from 'angulartics2/ga-enhanced-ecom';
-declare var ga: Function;
 
 import * as _ from 'lodash';
 
@@ -35,7 +33,6 @@ export class ProductListComponent implements OnInit {
               private searchService: SearchService,
               private categoryService: CategoryService,
               private pageScrollService: PageScrollService,
-              private at: Angulartics2GoogleAnalyticsEnhancedEcommerce,
               @Inject(DOCUMENT) private document: any) {
     // this.productService.setType(IRProduct);
   }
@@ -72,8 +69,6 @@ export class ProductListComponent implements OnInit {
       }else
         this.searchResults$ = this.searchService.getSearchResults(this.query, this.pageSize, (this.page - 1) * this.pageSize, this.sortField, 'ASC',
           this.categoryFilter, this.priceTier, this.customFilters.map(f => `Apttus_Config2__ProductId__r.` + f.field + ` = '` + f.value + `'`));
-      
-      this.analytics();
   }
 
   scrollTop(){
@@ -118,14 +113,5 @@ export class ProductListComponent implements OnInit {
     this.page = 1;
     this.sortField = evt;
     this.getResults();
-  }
-
-  analytics(){
-    this.searchResults$.subscribe(results => {
-      results.productList.forEach((product, index) => {
-        this.at.ecAddImpression({ id: product.ProductCode, name: product.Name, brand: product.Family, category: this.category.Name, position: index});
-      });
-      ga('send', 'pageview');
-    });
   }
 }
