@@ -21,7 +21,7 @@
       <tr *ngFor="let order of (orderList$ | async)">
         <th scope="row">
          <a href="javascript:void(0)" [routerLink]="['/my-account', 'orders', order.Name]">{{order.Name}}</a></th>
-        <td>{{order?.Total_Order_Amount__c | localCurrency | async}}</td>
+        <td>{{(order | OrderPricePipe | async)?.totalPrice$ | async}}</td>
         <td>{{order.CreatedDate | date : 'short'}}</td>
         <td>{{order.Apttus_Config2__OrderLineItems__r?.totalSize}}</td>
         <td>

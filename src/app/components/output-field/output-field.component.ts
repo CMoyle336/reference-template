@@ -20,7 +20,6 @@ export class OutputFieldComponent implements OnChanges {
 
   ngOnChanges() {
     this.field$ = this.sobjectService.describe(this.objectName).map(o => o.fields).map(f => f.filter(y => y.name === this.fieldName)[0]);
-    this.field$.subscribe(res => console.log(res));
   }
 
 }

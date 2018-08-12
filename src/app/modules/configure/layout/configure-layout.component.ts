@@ -82,9 +82,12 @@ export class ConfigureLayoutComponent implements OnInit {
       if(options){
         // Set the default options
         this.productOptionList = options.filter(option => option.Apttus_Config2__Default__c === true).map(option => {
+          let quantity = (option.Apttus_Config2__MinQuantity__c) ? option.Apttus_Config2__MinQuantity__c : 1;
+          if(option.Apttus_Config2__DefaultQuantity__c)
+            quantity = option.Apttus_Config2__DefaultQuantity__c;
           return {
             productOptionComponent: option,
-            quantity: (option.Apttus_Config2__DefaultQuantity__c) ? option.Apttus_Config2__DefaultQuantity__c : option.Apttus_Config2__MinQuantity__c,
+            quantity: quantity,
             attributeValues: null
           } as ProductOptionForm;
         });
@@ -113,13 +116,13 @@ export class ConfigureLayoutComponent implements OnInit {
 
   addToCart(){
     this.loading = true;
-    const additionalProducts = this.additionalProducts.map(p => {return {
+    const adt = this.additionalProducts.map(p => {return {
       productCode: p.ProductCode,
       quantity : 1
     } as CartProductForm;});
     Observable.combineLatest(
       this.cartService.addProductToCart(this.product, 1, false, this.productAttributeMap.map(p => p.attributeValue), this.productOptionList, true, false),
-      this.cartService.bulkAddProductToCart(additionalProducts, true)
+      this.cartService.bulkAddProductToCart(adt, true)
     ).subscribe(
       r => {
         this.loading = false;

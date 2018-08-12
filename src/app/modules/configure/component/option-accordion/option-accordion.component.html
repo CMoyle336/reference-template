@@ -12,7 +12,7 @@
 
               <div>
                 &nbsp;
-                <strong *ngIf="(product | OptionPricePipe: component | async)?.totalPrice > 0" class="text-success">+ {{(product | OptionPricePipe: component | async)?.totalPrice$ | async}}</strong>
+                <strong *ngIf="(component | OptionPricePipe | async)?.totalPrice > 0" class="text-success">+ {{(component | OptionPricePipe | async)?.totalPrice$ | async}}</strong>
               </div>
             </div>
             
@@ -45,7 +45,7 @@
                     <label class="custom-control-label" [for]="component.Id">&nbsp;</label>
                   </div>
                   <div>
-                    &nbsp;<strong *ngIf="(product | OptionPricePipe: component | async)?.totalPrice > 0" class="text-success">+ {{(product | OptionPricePipe: component | async)?.totalPrice$ | async}}</strong>
+                    &nbsp;<strong *ngIf="(component | OptionPricePipe | async)?.totalPrice > 0" class="text-success">+ {{(component | OptionPricePipe | async)?.totalPrice$ | async}}</strong>
                   </div>
                 </div>
                 <div class="img-container">

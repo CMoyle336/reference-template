@@ -27,7 +27,6 @@ export class ProductCatalogComponent implements OnInit {
 
   ngOnInit() {
     this.productList$ = this.userService.me().flatMap(user => this.productService.where(`CreatedById = {0}`, user.Id));
-    this.productList$.subscribe(res => console.log(res));
   }
 
   newProduct(template: TemplateRef<any>) {

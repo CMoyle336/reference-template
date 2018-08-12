@@ -27,6 +27,7 @@ export class AttributeAccordionComponent implements OnChanges {
           priceMatrices: null
         });
       });
+      this.onChange.emit(this.productAttributeMap.slice(0));
     }
   }
 

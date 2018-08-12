@@ -39,7 +39,7 @@
             <dd>{{order?.Apttus_Config2__PONumber__c}}</dd>
 
             <dt>Total Amount:</dt>
-            <dd>{{order?.Total_Order_Amount__c | localCurrency | async}}
+            <dd>{{(order | OrderPricePipe | async)?.totalPrice$ | async}}
           </dl>
         </div>
       </div>
@@ -83,10 +83,12 @@
                       alt="Generic placeholder image">
                     <div class="media-body d-flex flex-column justify-content-between">
                       <div>
-                        <h6 class="m-0">{{lineItem.Apttus_Config2__ProductId__r?.Name}}</h6>
+                        <h6 class="m-0">
+                          <a href="javascript:void(0)" [routerLink]="['/product', lineItem.Apttus_Config2__ProductId__r.ProductCode]">{{lineItem.Apttus_Config2__ProductId__r?.Name}}</a>
+                        </h6>
                         <small>
                           <strong>Product Code:</strong>&nbsp;{{lineItem.Apttus_Config2__ProductId__r.ProductCode}}
-                          <a class="d-block mt-1" href="javascript:void(0)" *ngIf="lineItem.Apttus_Config2__HasOptions__c">
+                          <a class="d-block mt-1" href="javascript:void(0)" *ngIf="lineItem.Apttus_Config2__HasOptions__c" (click)="openModal(configurationTemplate, lineItem)">
                             <span class="oi oi-wrench mr-1"></span>Configuration
                           </a>
                         </small>
@@ -105,8 +107,24 @@
       </div>
     </div>
   </div>
-
 </div>
+
+<ng-template #configurationTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{selectedLineItem.Apttus_Config2__ProductId__r.Name}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="selectedProduct; else loading">
+      <div class="d-flex justify-content-between">
+        <h5>Starting Price</h5>
+        <h5>{{(selectedProduct | ProductPricePipe | async)?.totalPrice$ | async}}</h5>
+      </div>
+    </div>
+  </div>
+</ng-template>
 
 <ng-template #loading>
   <div class="d-flex justify-content-center py-5">

@@ -10,7 +10,6 @@
           </h4>
           <h4>
             {{(product | ProductPricePipe:1:productAttributeValueList:productOptionList | async)?.totalPrice$ | async}}
-            <price [product]="product" [productOptions]="productOptionList"></price>
           </h4>
         </div>
         <div class="d-flex justify-content-between align-items-center mt-2">
@@ -99,8 +98,8 @@
                 <div>{{product?.ProductCode}}</div>
                 <div class="mt-2"><strong>Qty:</strong> 1</div>
                 <div class="d-flex">
-                  <strong>Price:</strong>
-                  <price [product]="product" [productOptions]="productOptionList" class="ml-2"></price>
+                  <strong>Price:&nbsp;</strong>
+                 {{(product | ProductPricePipe:1:productAttributeValueList:productOptionList | async)?.totalPrice$ | async}}
                 </div>
               </div>
             </div>
