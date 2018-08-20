@@ -38,7 +38,7 @@ export function _window(): any {
     SalesforceModule.forRoot(
       Configuration
     ),
-    CommerceModule.forRoot('TIER1 Hardware and Software'),
+    CommerceModule.forRoot('thomson-reuters'),
     ComponentModule
   ],
   providers: [RouteGuard, AuthGuard, ConfigureGuard],

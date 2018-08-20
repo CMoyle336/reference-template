@@ -117,12 +117,7 @@
     </button>
   </div>
   <div class="modal-body">
-    <div *ngIf="selectedProduct; else loading">
-      <div class="d-flex justify-content-between">
-        <h5>Starting Price</h5>
-        <h5>{{(selectedProduct | ProductPricePipe | async)?.totalPrice$ | async}}</h5>
-      </div>
-    </div>
+    <apt-item-configuration-summary [item]="selectedLineItem" [parent]="order"></apt-item-configuration-summary>
   </div>
 </ng-template>
 

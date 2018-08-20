@@ -15,6 +15,7 @@ import { StoreModule, CartModule, PricingModule } from '@apttus/ecommerce';
 import { OutputFieldComponent } from './output-field/output-field.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { ItemConfigurationSummaryComponent } from './item-configuration-summary/item-configuration-summary.component';
 
 @NgModule({
   imports: [
@@ -37,13 +38,15 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     LazyLoadImageModule,
     LaddaModule,
     FooterComponent,
-    OutputFieldComponent
+    OutputFieldComponent,
+    ItemConfigurationSummaryComponent
   ],
   declarations: [
     HeaderComponent,
     NavAccountComponent,
     FooterComponent,
-    OutputFieldComponent
+    OutputFieldComponent,
+    ItemConfigurationSummaryComponent
   ]
 })
 export class ComponentModule { }

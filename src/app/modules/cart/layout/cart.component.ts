@@ -54,13 +54,14 @@ export class CartComponent implements OnInit {
 
   submitOrder(){
     if (this.shippingEqualsBilling){
-      this.order.ShippingCity__c = this.order.BillingCity__c;
-      this.order.ShippingStreet__c = this.order.BillingStreet__c;
-      this.order.ShippingState__c = this.order.BillingState__c;
-      this.order.ShippingPostalCode__c = this.order.BillingPostalCode__c;
-      this.order.ShippingCountry__c = this.order.BillingCountry__c;
+      this.order.Apttus_Config2__PrimaryContactId__r.OtherCity = this.order.Apttus_Config2__PrimaryContactId__r.MailingCity;
+      this.order.Apttus_Config2__PrimaryContactId__r.OtherStreet = this.order.Apttus_Config2__PrimaryContactId__r.MailingStreet;
+      this.order.Apttus_Config2__PrimaryContactId__r.OtherState = this.order.Apttus_Config2__PrimaryContactId__r.MailingState;
+      this.order.Apttus_Config2__PrimaryContactId__r.OtherPostalCode = this.order.Apttus_Config2__PrimaryContactId__r.MailingPostalCode;
+      this.order.Apttus_Config2__PrimaryContactId__r.OtherCountryCode = this.order.Apttus_Config2__PrimaryContactId__r.MailingCountryCode;
     }
     this.loading = true;
+    console.log(this.order);
     this.orderService.convertCartToOrder(this.order).subscribe(
       res => {
         this.loading = false;

@@ -35,10 +35,10 @@
                 </div>
               </div>
 
-              <apt-address [(ngModel)]="order" type="Billing" name="billingAddress"></apt-address>
+              <apt-address [(ngModel)]="order.Apttus_Config2__PrimaryContactId__r" type="Billing" name="billingAddress"></apt-address>
             </tab>
             <tab heading="Shipping Address" [disabled]="shippingEqualsBilling" id="shipping">
-                <apt-address [(ngModel)]="order" type="Shipping" name="shippingAddress" class="mt-3"></apt-address>
+                <apt-address [(ngModel)]="order.Apttus_Config2__PrimaryContactId__r" type="Shipping" name="shippingAddress" class="mt-3"></apt-address>
             </tab>
           </tabset>
         

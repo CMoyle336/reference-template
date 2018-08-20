@@ -1,16 +1,10 @@
 import {
   Component,
-  OnInit,
-  ChangeDetectionStrategy,
   NgZone,
   Input,
-  OnChanges,
-  ViewChild,
-  AfterViewInit,
-  ElementRef
+  OnChanges
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Product, ProductService, Attachment } from '@apttus/ecommerce';
+import { Product, ProductService } from '@apttus/ecommerce';
 import { ImagePipe } from 'ng-salesforce';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
 

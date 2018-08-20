@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef, HostListener  } from '@angul
 import {
   ProductService, Product, ProductOptionService, ProductOptionComponent, ProductAttributeService,
   ProductAttribute, ProductOptionForm, ProductAttributeMap, ConstraintRuleService, CartService,
-  Cart, ConstraintRuleAction, ConstraintRule, CartProductForm, ProductAttributeValue} from '@apttus/ecommerce';
+  Cart, ConstraintRuleAction, ConstraintRule, CartProductForm, ProductAttributeValue, PriceListItemService} from '@apttus/ecommerce';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
@@ -51,6 +51,7 @@ export class ConfigureLayoutComponent implements OnInit {
                   private productAttributeService: ProductAttributeService,
                   private constraintRuleService: ConstraintRuleService,
                   private modalService: BsModalService,
+                  private priceListItemService: PriceListItemService,
                   private cartService: CartService) {
   }
 
@@ -74,12 +75,13 @@ export class ConfigureLayoutComponent implements OnInit {
         Observable.of(null)),
       Observable.if(
         () => (product.Apttus_Config2__HasOptions__c && product.Apttus_Config2__OptionGroups__r && _.get(product, 'Apttus_Config2__OptionGroups__r.totalSize', 0) > 0),
-        this.productOptionService.getProductOptions(product.ProductCode),
+        this.productOptionService.getProductOptions(product.ProductCode, null, true),
         Observable.of(null)
       ),
       this.constraintRuleService.getConstraintRules(product)
     ).subscribe(([attributes, options, rules]) => {
       if(options){
+
         // Set the default options
         this.productOptionList = options.filter(option => option.Apttus_Config2__Default__c === true).map(option => {
           let quantity = (option.Apttus_Config2__MinQuantity__c) ? option.Apttus_Config2__MinQuantity__c : 1;
