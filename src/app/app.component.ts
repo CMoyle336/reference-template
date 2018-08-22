@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { setTheme } from 'ngx-bootstrap/utils';
-
+import { ProductService } from '@apttus/ecommerce';
+import { TRProduct } from './models/product.model';
 @Component({
   selector: 'app-root',
   template: `
@@ -15,7 +16,8 @@ export class AppComponent {
   title = 'app';
   showHeader: boolean = true;
 
-  constructor() {
+  constructor(private productService: ProductService) {
+    this.productService.setType(TRProduct);
     setTheme('bs4'); // or 'bs4'
   }
 

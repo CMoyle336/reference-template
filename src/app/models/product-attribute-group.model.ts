@@ -10,6 +10,7 @@ export class TRProductAttributeGroup extends SObject{
     Apttus_Config2__BusinessObject__c: string = null;
     Apttus_Config2__Description__c: string = null;
     Apttus_Config2__TwoColumnAttributeDisplay__c: string = null;
+    Apttus_Config2__ThreeColumnAttributeDisplay__c: string = undefined;
 }
 
 export class TRProductAttributeGroupMember extends ProductAttributeGroupMember{

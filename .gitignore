@@ -39,3 +39,4 @@ testem.log
 Thumbs.db
 sf.json
 src/app/salesforce.config.ts
+build/

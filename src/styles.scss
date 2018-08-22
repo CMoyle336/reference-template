@@ -94,6 +94,9 @@ div.slick-slide:focus{
 //     width: 25%;
 //     bottom: 4rem !important;
 // }
+.carousel-item img{
+    width: 100%;
+}
 .slick-prev:before, .slick-next:before, .slick-prev:hover:before, .slick-prev:focus:before, .slick-next:hover:before, .slick-next:focus:before{
     color: $primary !important;
 }

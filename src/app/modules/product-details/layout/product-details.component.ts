@@ -3,6 +3,7 @@ import { ProductService, Product, ConstraintRuleService, ProductReview, Constrai
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
+import { TRProduct, TRConstraintRuleCondition } from '../../../models/product.model';
 
 @Component({
   selector: 'app-product-details',
@@ -24,7 +25,10 @@ export class ProductDetailsComponent implements OnInit {
               private productService: ProductService,
               private cdr: ChangeDetectorRef,
               private priceMatrixService: PriceMatrixService,
-              private constraintRuleService: ConstraintRuleService) { }
+              private constraintRuleService: ConstraintRuleService) { 
+                this.productService.setType(TRProduct);
+                this.constraintRuleService.setType(TRConstraintRuleCondition);
+  }
 
   ngOnInit() {
     this.route.params

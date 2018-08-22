@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.storefront$ = this.storefrontService.getStorefront();
     this.productService.setType(TRProduct);
-    console.log(new TRProduct());
     // this.categoryService.where(`Name = 'Compressors' OR Name = 'Parts & Accessories'`).subscribe(categories => {
     this.categoryService.queryBuilder(`ID <> NULL`, 2).subscribe(categories => {
       this.categories = categories;

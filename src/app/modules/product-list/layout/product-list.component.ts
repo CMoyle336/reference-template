@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { FieldFilter } from '../component/field-filter.component';
 
 import * as _ from 'lodash';
+import { TRProduct } from '../../../models/product.model';
 
 @Component({
   selector: 'app-product-list',
@@ -33,8 +34,9 @@ export class ProductListComponent implements OnInit {
               private searchService: SearchService,
               private categoryService: CategoryService,
               private pageScrollService: PageScrollService,
+              private productService: ProductService,
               @Inject(DOCUMENT) private document: any) {
-    // this.productService.setType(IRProduct);
+    this.productService.setType(TRProduct);
   }
 
   ngOnInit() {
