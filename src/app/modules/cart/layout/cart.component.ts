@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Cart, CartService, Order, OrderService, AccountLocation, OrderLineItem } from '@apttus/ecommerce';
+import { Cart, CartService, Order, OrderService, Account, AccountService } from '@apttus/ecommerce';
 import { Observable } from 'rxjs/Observable';
 import { TabsetComponent } from 'ngx-bootstrap';
 import { Card } from '../component/card-form/card-form.component';
@@ -22,6 +22,9 @@ export class CartComponent implements OnInit {
   @ViewChild('confirmationTemplate') confirmationTemplate: TemplateRef<any>;
 
   cart$: Observable<Cart>;
+  shipToAccount: Account;
+  billToAccount: Account;
+
   shippingEqualsBilling: boolean = true;
   order: Order;
   orderConfirmation: Order;
@@ -30,16 +33,20 @@ export class CartComponent implements OnInit {
   uniqueId: string;
   paymentState: 'CARD' | 'INVOICE' = 'CARD';
 
-  shippingAddress: AccountLocation = new AccountLocation();
-  billingAddress: AccountLocation = new AccountLocation();
+  
   confirmationModal: BsModalRef;
 
-  constructor(private cartService: CartService, private orderService: OrderService, private router: Router, private modalService: BsModalService) {
+  constructor(private cartService: CartService, private orderService: OrderService, private router: Router, private modalService: BsModalService, private accountService: AccountService) {
     this.uniqueId = _.uniqueId();
   }
 
   ngOnInit() {
     this.cart$ = this.cartService.getMyCart();
+    this.accountService.getMyAccount().subscribe(a => {
+      this.shipToAccount = a;
+      this.billToAccount = a;
+    });
+
     this.order = new Order();
     this.card = {} as Card;
   }
@@ -61,8 +68,7 @@ export class CartComponent implements OnInit {
       this.order.Apttus_Config2__PrimaryContactId__r.OtherCountryCode = this.order.Apttus_Config2__PrimaryContactId__r.MailingCountryCode;
     }
     this.loading = true;
-    console.log(this.order);
-    this.orderService.convertCartToOrder(this.order).subscribe(
+    this.orderService.convertCartToOrder(this.order, this.billToAccount, this.shipToAccount).subscribe(
       res => {
         this.loading = false;
         this.orderConfirmation = res;

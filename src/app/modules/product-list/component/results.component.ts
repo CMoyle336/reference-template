@@ -19,7 +19,7 @@ import * as _ from 'lodash';
           <div class="input-group-prepend">
             <label class="input-group-text" for="sort">Show</label>
           </div>
-          <select class="custom-select custom-select-sm" id="size">
+          <select class="custom-select custom-select-sm" id="size" [(ngModel)]="limit" name="limit">
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
@@ -76,8 +76,7 @@ export class ResultsComponent implements OnChanges{
 
   constructor() {}
 
-  ngOnChanges() {
-  }
+  ngOnChanges() {}
 
   get totalRecords(): string{
     if(this.recordCount > 2000)

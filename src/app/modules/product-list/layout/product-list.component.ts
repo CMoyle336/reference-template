@@ -5,9 +5,8 @@ import { PageScrollService, PageScrollInstance } from 'ngx-page-scroll';
 import { DOCUMENT} from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { FieldFilter } from '../component/field-filter.component';
-
-import * as _ from 'lodash';
 import { TRProduct } from '../../../models/product.model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-product-list',
@@ -21,7 +20,7 @@ export class ProductListComponent implements OnInit {
   public searchResults$: Observable<SearchResults>;
 
   page = 1;
-  pageSize = 15;
+  pageSize = 10;
   view='grid';
   priceTier: PriceTier = null;
   categoryFilter: Array<Category> = [];

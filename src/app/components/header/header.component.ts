@@ -15,7 +15,8 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 export class HeaderComponent implements OnInit {
   @ViewChild('searchModal') searchModal: ElementRef;
   @ViewChild('profile') profile: MiniProfileComponent;
-
+  @ViewChild('searchBox') searchBox: ElementRef;
+  
   categoryTree$: Observable<Array<Category>>;
   categoryBranch: Array<Category>;
   index: number = 0;
@@ -29,6 +30,7 @@ export class HeaderComponent implements OnInit {
   me$: Observable<User>;
 
   typeahead$: Observable<Array<Product>> = new Observable<Array<Product>>();
+  typeaheadLoading: boolean = false;
   keyupEvent: any;
 
   constructor(private categoryService: CategoryService,
@@ -90,6 +92,11 @@ export class HeaderComponent implements OnInit {
 
   onSubmit(){
     this.router.navigate(['/search', this.searchQuery]);
+  }
+
+  typeaheadOnSelect(evt){
+    this.modalRef.hide();
+    this.router.navigate(['/product', evt.item.ProductCode]);
   }
 
   goToAddress(){

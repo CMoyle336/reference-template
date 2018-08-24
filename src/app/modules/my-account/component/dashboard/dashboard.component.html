@@ -76,22 +76,22 @@
                 Recent Orders
             </div>
             <div class="card-body p-0">
-                <table class="table table-sm table-striped">
-                    <thead>
+                <table class="table table-sm table-striped table-hover">
+                    <thead class="thead-dark">
                         <tr>
-                            <th scope="col">Order Name</th>
+                            <th scope="col" class="pl-3">Order Name</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Date</th>
+                            <th scope="col" class="pr-3">Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let order of orderList; let i = index">
+                        <tr *ngFor="let order of orderList; let i = index" class="px-2">
                             <ng-container *ngIf="i < 6">
-                                <th scope="row">
+                                <th scope="row" class="pl-3">
                                     <a href="javascript:void(0)" [routerLink]="['/my-account/orders/', order.Name]">{{order.Name}}</a>
                                 </th>
                                 <td>{{(order | OrderPricePipe | async)?.totalPrice$ | async}}</td>
-                                <td>{{order.CreatedDate | date:'short'}}</td>
+                                <td class="pr-3">{{order.CreatedDate | date:'shortDate'}}</td>
                             </ng-container>
                         </tr>
                     </tbody>
@@ -105,20 +105,22 @@
                 Recent Quotes
             </div>
             <div class="card-body p-0">
-                <table class="table table-sm table-striped">
-                    <thead>
+                <table class="table table-sm table-striped table-hover">
+                    <thead class="thead-dark">
                         <tr>
-                            <th scope="col">Quote Name</th>
+                            <th scope="col" class="pl-3">Quote Name</th>
                             <th scope="col">Amount</th>
-                            <th scope="col">Date</th>
+                            <th scope="col" class="pr-3">Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let quote of quoteList; let i = index">
                             <ng-container *ngIf="i < 6">
-                                <th scope="row">{{quote.Name}}</th>
+                                <th scope="row" class="pl-3">
+                                    <a href="javascript:void(0)" [routerLink]="['/my-account/quotes/', quote.Name]">{{quote.Name}}</a>
+                                </th>
                                 <td>{{quote.Discounted_Price__c | localCurrency | async}}</td>
-                                <td>{{quote.CreatedDate | date:'short'}}</td>
+                                <td class="pr-3">{{quote.CreatedDate | date:'shortDate'}}</td>
                             </ng-container>
                         </tr>
                     </tbody>

@@ -43,13 +43,37 @@
         </button>
       </div>
       <div class="modal-body">
-        <input type="search" class="form-control" placeholder="Enter your search term..." typeaheadWaitMs="1000" [typeahead]="typeahead$" [typeaheadOptionsLimit]="10" minlength="2" typeaheadOptionField="Name" [(ngModel)]="searchQuery" name="searchQuery" autocomplete="off"/>
+        <apt-md-spinner class="small" *ngIf="typeaheadLoading"></apt-md-spinner>
+        <input type="search" class="form-control" 
+          placeholder="Enter your search term..." 
+          (typeaheadLoading)="typeaheadLoading = $event" 
+          (typeaheadOnSelect)="typeaheadOnSelect($event)"
+          [typeaheadItemTemplate]="typeAheadItem" 
+          [typeahead]="typeahead$" 
+          [typeaheadOptionsLimit]="5" 
+          minlength="2" 
+          typeaheadWaitMs="1000"
+          typeaheadOptionField="Name" 
+          [(ngModel)]="searchQuery" 
+          name="searchQuery" 
+          #searchBox
+          autocomplete="off"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary" type="submit">Submit</button>
       </div>
   </form>
+</ng-template>
+
+<ng-template #typeAheadItem let-model="item" let-index="index" let-last="last">
+  <div class="media border-gray p-2" [class.border-bottom]="!last">
+    <img class="mr-3 align-self-center thumbnail" [src]="model.Apttus_Config2__IconId__c | image" [alt]="model.Name">
+    <div class="media-body">
+      <h6 class="m-0">{{model.Name}}</h6>
+      <small class="d-block">{{model.ProductCode}}</small>
+    </div>
+  </div>
 </ng-template>
 
 <!-- <ng-template #storeModal>

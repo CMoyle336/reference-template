@@ -3,18 +3,20 @@
     <span class="text-muted">STARTING PRICE</span>
     <span class="text-muted">{{(selectedProduct | ProductPricePipe | async)?.totalPrice$ | async}}</span>
   </div>
-  <div *ngFor="let member of selectedProduct?.Apttus_Config2__AttributeGroups__r?.records">
+  <div *ngFor="let attributeGroup of attributeGroups">
     <div class="text-muted mb-2">
-      {{member.Apttus_Config2__AttributeGroupId__r?.Name}}
+      {{attributeGroup}}
     </div>
-    <!-- <div *ngFor="let attribute of member.productAttributeList" class="mb-3 d-flex justify-content-between align-items-end">
-      <div>
-        <div>{{attribute._describe.label}}</div>
-        <small>{{member.attributeValue[attribute.Apttus_Config2__Field__c]}}</small>
+    <ng-container *ngFor="let attribute of attributeList[attributeGroup]">
+      <div *ngIf="productAttributeValue" class="mb-3 d-flex justify-content-between align-items-end">
+          <div>
+            <div>{{attribute._describe.label}}</div>
+            <small>{{productAttributeValue[attribute.Apttus_Config2__Field__c]}}</small>
+          </div>
+          <small class="text-muted">{{(productAttributeValue[attribute.Apttus_Config2__Field__c] | AttributeValuePricePipe:
+            selectedProduct : attribute | async)?.totalPrice$ | async}}</small>
       </div>
-      <small class="text-muted">{{priceService.getAttributePriceForProduct(stateService.product, attribute, member.attributeValue[attribute.Apttus_Config2__Field__c])
-        | async | localCurrency | async}}</small>
-    </div> -->
+      </ng-container>
     <hr/>
   </div>
   <div *ngFor="let optionGroup of optionGroups">
@@ -24,15 +26,17 @@
     <div *ngFor="let option of optionList[optionGroup]" class="my-3">
       <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center">
-          <img class="mr-3" [src]="sanitizer.bypassSecurityTrustUrl(option.Apttus_Config2__OptionId__r.Apttus_Config2__IconId__c | image)" width="50" alt="Generic placeholder image">
+          <img class="mr-3" [src]="sanitizer.bypassSecurityTrustUrl(option.Apttus_Config2__OptionId__r.Apttus_Config2__IconId__c | image)"
+            width="50" alt="Generic placeholder image">
           <div>
             <div>{{option.Apttus_Config2__OptionId__r.Name}}</div>
-            <div>Quantity: {{option.Apttus_Config2__Quantity__c}} @ {{(option.Apttus_Config2__ProductOptionId__r | OptionPricePipe | async)?.basePrice$ | async}}</div>
+            <div>Quantity: {{option.Apttus_Config2__Quantity__c}} @ {{option.Apttus_Config2__NetUnitPrice__c | localCurrency
+              | async}}</div>
           </div>
         </div>
-        
+
         <span class="text-muted">
-          {{(option.Apttus_Config2__ProductOptionId__r | OptionPricePipe | async)?.totalPrice$ | async}}
+          {{option.Apttus_Config2__NetPrice__c | localCurrency | async}}
         </span>
       </div>
     </div>

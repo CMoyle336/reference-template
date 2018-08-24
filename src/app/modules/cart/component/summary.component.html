@@ -75,13 +75,13 @@
         </button>
     </div>
     <div class="modal-body">
-        <!-- <apt-output-field objectName="Apttus_Config2__ProductAttributeValue__c" fieldName="APTSCU_Aux_Power_Voltage__c" [value]="lineItem.Apttus_Config2__AttributeValueId__r['APTSCU_Aux_Power_Voltage__c']"></apt-output-field> -->
+        <apt-item-configuration-summary [item]="lineItem" [parent]="cart"></apt-item-configuration-summary>
     </div>
 </ng-template>
 
 <ng-template #confirmationTemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Your quote request has been submitted.</h4>
+    <h4 class="modal-title pull-left">Quote {{generatedQuote?.Name}} Generated</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="confirmationModal.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -91,6 +91,6 @@
   </div>
   <div class="modal-footer d-flex justify-content-center flex-wrap flex-md-nowrap">
     <button class="btn btn-secondary d-block w-100 m-2" [routerLink]="['/']" (click)="confirmationModal.hide()">Continue Shopping</button>
-    <button class="btn btn-primary d-block w-100 m-2" (click)="confirmationModal.hide()">Quote Details</button>
+    <button class="btn btn-primary d-block w-100 m-2" [routerLink]="['/my-account', 'quotes', generatedQuote.Name]" (click)="confirmationModal.hide()">Quote Details</button>
   </div>
 </ng-template>

@@ -12,7 +12,7 @@
         <div class="card-body">
           <h5 class="card-title">Billing Address</h5>
           {{order?.Apttus_Config2__PrimaryContactId__r?.FirstName}} {{order?.Apttus_Config2__PrimaryContactId__r?.LastName}}
-          <apt-address [ngModel]="order" name="billingAddress" [readonly]="true"></apt-address>
+          <apt-address [ngModel]="order?.Apttus_Config2__BillToAccountId__r" name="billingAddress" [readonly]="true"></apt-address>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
         <div class="card-body">
           <h5 class="card-title">Shipping Address</h5>
           {{order?.Apttus_Config2__PrimaryContactId__r?.FirstName}} {{order?.Apttus_Config2__PrimaryContactId__r?.LastName}}
-          <apt-address [ngModel]="order" name="shippingAddress" type="shipping" [readonly]="true"></apt-address>
+          <apt-address [ngModel]="order?.Apttus_Config2__ShipToAccountId__r" name="shippingAddress" type="shipping" [readonly]="true"></apt-address>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
             <dd>{{order?.Apttus_Config2__PONumber__c}}</dd>
 
             <dt>Total Amount:</dt>
-            <dd>{{(order | OrderPricePipe | async)?.totalPrice$ | async}}
+            <dd>{{(order | OrderPricePipe | async)?.totalPrice$ | async}}</dd>
           </dl>
         </div>
       </div>

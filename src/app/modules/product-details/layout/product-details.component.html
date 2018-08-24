@@ -1,7 +1,7 @@
 <div class="py-4 container-fluid">
   <apt-breadcrumb [sobject]="product"></apt-breadcrumb>
 
-  <div class="row" *ngIf="product && rules; else loading">
+  <div class="row" *ngIf="product; else loading">
     <div class="col-12 col-md-4">
       <product-images [product]="product"></product-images>
     </div>
@@ -10,7 +10,7 @@
         <div class="card-body">
           <div class="d-flex justify-content-between flex-wrap">
             <h4>{{product?.Name}}</h4>
-            <span *ngIf="replacementRules?.length !== 0">
+            <span *ngIf="replacementRules?.length > 0">
               <span class="oi oi-warning mr-2"></span> This item has been replaced by {{replacementRules?.length}} new variations.
             </span>
           </div>
@@ -26,7 +26,7 @@
             <h3 class="d-flex justify-content-start align-items-center">
               <price [product]="product"></price>
             </h3>
-            <apt-add-to-cart [product]="product" class="w-50" rollbackOnFail="false" [disabled]="replacementRules?.length !== 0"></apt-add-to-cart>
+            <apt-add-to-cart [product]="product" class="w-50" rollbackOnFail="false" [disabled]="replacementRules?.length > 0"></apt-add-to-cart>
           </div>
         </div>
       </div>
@@ -90,9 +90,14 @@
     </div>
   </ng-template>
 
-  <div *ngIf="product && (relatedProducts$ | async)?.length > 0">
+  <div *ngIf="product && (relatedProducts$ | async)?.length > 0" class="mt-4">
+    <h4 class="mt-5">Customers who purchased this also purchased...</h4>
+    <apt-product-carousel [productList]="(relatedProducts$ | async)" slides="5"></apt-product-carousel>
+  </div>
+
+  <div *ngIf="product && (similarProducts$ | async)?.length > 0" class="mt-4">
     <h4 class="mt-5">Related Products</h4>
-    <apt-product-carousel [productList]="(relatedProducts$ | async)" slides="4"></apt-product-carousel>
+    <apt-product-carousel [productList]="(similarProducts$ | async)" slides="5"></apt-product-carousel>
   </div>
 
 </div>

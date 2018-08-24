@@ -22,7 +22,7 @@
               Save Configuration
             </a>
           </div>
-          <button class="btn btn-primary px-5 btn-sm" (click)="addToCart()" [ladda]="loading" data-style="zoom-in" *ngIf="!hasReplacements">Add to Cart</button>
+          <apt-add-to-cart *ngIf="product" [configurationEnabled]="false" [showQuantityControls]="false" [product]="product" [productAttributes]="productAttributeValueList" [productOptions]="productOptionList"></apt-add-to-cart>
           <span *ngIf="hasReplacements">
             This product has been replaced
           </span>
@@ -82,67 +82,3 @@
   </div>
 </ng-template>
 
-<div bsModal #completeDialog="bs-modal" class="modal fade">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">1 Product(s) added to cart</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-12 col-md-7 bg-light">
-            <div class="media">
-              <img class="mr-3" [src]="product?.Apttus_Config2__IconId__c | image" width="125" height="100" alt="Generic placeholder image">
-              <div class="media-body">
-                <h5 class="m-0">{{product?.Name}}</h5>
-                <div>{{product?.ProductCode}}</div>
-                <div class="mt-2"><strong>Qty:</strong> 1</div>
-                <div class="d-flex">
-                  <strong>Price:&nbsp;</strong>
-                 {{(product | ProductPricePipe:1:productAttributeValueList:productOptionList | async)?.totalPrice$ | async}}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-5 px-2">
-            <div class="card">
-              <div class="card-header d-flex justify-content-between">
-                <strong>Cart Total</strong>
-                <span class="text-primary">{{(cart$ | async | CartPricePipe | async)?.totalPrice$ | async}}</span>
-              </div>
-              <div class="card-body text-center">
-                <button class="btn btn-lg btn-block btn-primary px-3" type="button" [routerLink]="['/cart']" (click)="completeDialog.hide()">Proceed to Checkout</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <ng-container *ngIf="(productRecommendations$ | async)?.length > 0">
-           <div class="d-flex align-items-center my-3">
-            <span>You may also like</span>
-            <div class="border-top mt-4 border-gray flex-grow-1 ml-3">&nbsp;</div>
-          </div>
-
-          <ul class="list-unstyled">
-            <li class="media bg-light my-2 p-2" *ngFor="let product of (productRecommendations$ | async)">
-              <img class="mr-3" [src]="product.Apttus_Config2__IconId__c | image" width="50" height="50" alt="Generic placeholder image">
-              <div class="media-body d-flex flex-wrap justify-content-between">
-                <div>
-                  <h6 class="m-0">{{product?.Name}}</h6>
-                  <small><strong>Product Code:</strong>&nbsp;{{product.ProductCode}}</small>
-                </div>
-                <span>
-                  <strong>Qty:</strong>&nbsp;1
-                </span>
-                <span class="w-25">
-                  <strong>Price:</strong>
-                  &nbsp;{{(product | ProductPricePipe | async)?.totalPrice$ | async}}
-                </span>
-                <button class="btn btn-outline-primary">Add to Cart</button>
-              </div>
-            </li>
-          </ul>
-        </ng-container>
-      </div>
-    </div>
-  </div>
-</div>

@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ProductService, Product, ConstraintRuleService, ProductReview, ConstraintRule, PriceMatrixService, PriceMatrixEntry } from '@apttus/ecommerce';
+import { ProductService, Product, ConstraintRuleService, ConstraintRule, PriceMatrixService, PriceMatrixEntry } from '@apttus/ecommerce';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Observable';
-import { TRProduct, TRConstraintRuleCondition } from '../../../models/product.model';
+import { TRProduct } from '../../../models/product.model';
 
 @Component({
   selector: 'app-product-details',
@@ -15,8 +15,8 @@ export class ProductDetailsComponent implements OnInit {
   product: Product;
   rules: Array<ConstraintRule>;
   relatedProducts$: Observable<Array<Product>>;
+  similarProducts$: Observable<Array<Product>>;
 
-  productReviewList$: Observable<Array<ProductReview>>;
   replacementProducts$: Observable<Array<Product>>;
   replacementRules: Array<any>;
   volumeDiscounts: Array<PriceMatrixEntry>;
@@ -26,8 +26,7 @@ export class ProductDetailsComponent implements OnInit {
               private cdr: ChangeDetectorRef,
               private priceMatrixService: PriceMatrixService,
               private constraintRuleService: ConstraintRuleService) { 
-                this.productService.setType(TRProduct);
-                this.constraintRuleService.setType(TRConstraintRuleCondition);
+              this.productService.setType(TRProduct);
   }
 
   ngOnInit() {
@@ -47,15 +46,23 @@ export class ProductDetailsComponent implements OnInit {
 
 
   onProductLoad(product: Product){
+    console.log(product);
+    this.relatedProducts$ = null;
+    this.replacementProducts$ = null;
+    this.replacementRules = null;
+    this.volumeDiscounts = null;
+
     this.product = product;
     this.relatedProducts$ = this.productService.getProductsByCategory(_.get(product, 'Apttus_Config2__Categories__r.records[0].Apttus_Config2__ClassificationId__r.Apttus_Config2__AncestorId__c'));
-    this.constraintRuleService.getConstraintRules(product).take(1).subscribe(rules => {
-      this.rules = rules;
+    this.similarProducts$ = this.productService.getProductsByCategory(_.get(product, 'Apttus_Config2__Categories__r.records[0].Apttus_Config2__ClassificationId__r.Apttus_Config2__PrimordialId__c'));
 
-      this.replacementRules = _.flatten(rules.map(r => r.Apttus_Config2__ConstraintRuleActions__r.records.filter(a => a.Apttus_Config2__ActionType__c === 'Replacement')));
-      if(this.replacementRules.length > 0)
-        this.replacementProducts$ = this.productService.get(this.replacementRules.map(p => p.Apttus_Config2__ProductId__c));
-    });
+    // this.constraintRuleService.getConstraintRules(product).take(1).subscribe(rules => {
+    //   this.rules = rules;
+
+    //   this.replacementRules = _.flatten(rules.map(r => r.Apttus_Config2__ConstraintRuleActions__r.records.filter(a => a.Apttus_Config2__ActionType__c === 'Replacement')));
+    //   if(this.replacementRules.length > 0)
+    //     this.replacementProducts$ = this.productService.get(this.replacementRules.map(p => p.Apttus_Config2__ProductId__c));
+    // });
     this.priceMatrixService.getPriceMatrixData([this.product.Apttus_Config2__PriceLists__r.records[0]]).subscribe(r => {
       r.forEach(matrix => {
         let hasQuantityRule = false;

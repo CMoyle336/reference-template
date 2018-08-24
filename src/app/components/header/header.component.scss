@@ -53,3 +53,8 @@
 .store-list>div:not(:last-child){
     border-right: 1px solid $gray-300;
 }
+apt-md-spinner{
+    position: absolute;
+    right: 1.4rem;
+    top: 1.3rem;
+}

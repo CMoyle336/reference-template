@@ -5,7 +5,7 @@ import {
   Cart, ConstraintRuleAction, ConstraintRule, CartProductForm, ProductAttributeValue, PriceListItemService} from '@apttus/ecommerce';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import * as _ from 'lodash';
 
@@ -16,7 +16,6 @@ import * as _ from 'lodash';
 })
 export class ConfigureLayoutComponent implements OnInit {
   @ViewChild('confirmDialog') confirmDialog: TemplateRef<any>;
-  @ViewChild('completeDialog') completeDialog: ModalDirective;
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event) {
@@ -25,7 +24,6 @@ export class ConfigureLayoutComponent implements OnInit {
 
   fixedHeader: boolean = false;
   constraintRules$: Observable<Array<ConstraintRule>>;
-  productRecommendations$: Observable<Array<Product>>;
   hasReplacements: boolean = false;
 
   product: Product;
@@ -51,7 +49,6 @@ export class ConfigureLayoutComponent implements OnInit {
                   private productAttributeService: ProductAttributeService,
                   private constraintRuleService: ConstraintRuleService,
                   private modalService: BsModalService,
-                  private priceListItemService: PriceListItemService,
                   private cartService: CartService) {
   }
 
@@ -110,7 +107,6 @@ export class ConfigureLayoutComponent implements OnInit {
       this.product = product;
       if(rules){
         this.constraintRules = rules;
-        this.productRecommendations$ = this.productService.get(_.flatten(rules.map(r => r.Apttus_Config2__ConstraintRuleActions__r.records.filter(a => a.Apttus_Config2__ActionType__c === 'Recommendation'))).map(p => p.Apttus_Config2__ProductId__c));
         this.hasReplacements = _.flatten(rules.map(r => r.Apttus_Config2__ConstraintRuleActions__r.records.filter(a => a.Apttus_Config2__ActionType__c === 'Replacement'))).length > 0;
       }
     });
@@ -128,7 +124,6 @@ export class ConfigureLayoutComponent implements OnInit {
     ).subscribe(
       r => {
         this.loading = false;
-        this.completeDialog.show();
       },
       e => {this.loading = false;}
     );

@@ -1,3 +1,52 @@
-<p>
-  settings works!
-</p>
+<nav class="navbar navbar-light bg-white d-flex justify-content-between">
+  <span class="navbar-brand">
+    My Settings
+  </span>
+  <button class="btn btn-outline-primary">Reset Password</button>
+</nav>
+
+<div class="row mt-3">
+  <div class="col-12 col-md-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-between">
+          <span>User Information</span>
+          <button class="btn btn-sm btn-link"><span _ngcontent-c4="" class="oi oi-pencil"></span></button>
+        </h5>
+        <dl class="mt-4">
+          <dt>First Name:</dt>
+          <dd>{{(user$ | async)?.FirstName}}</dd>
+        
+          <dt>Last Name:</dt>
+          <dd>{{(user$ | async)?.LastName}}</dd>
+        
+          <dt>Email Address:</dt>
+          <dd>{{(user$ | async)?.Email}}</dd>
+
+          <dt>Username:</dt>
+          <dd>{{(user$ | async)?.Username}}</dd>
+
+          <dt>Locale:</dt>
+          <dd>{{(user$ | async)?.LocaleSidKey}}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Account Information</h5>
+        <dl class="mt-4">
+          <dt>Name:</dt>
+          <dd>{{(account$ | async)?.Name}}</dd>
+
+          <dt>Address:</dt>
+          <dd><apt-address [ngModel]="account$ | async" name="shippingAddress" type="billing" [readonly]="true"></apt-address></dd>
+
+          <dt>Phone:</dt>
+          <dd>{{(account$ | async)?.Phone}}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, TemplateRef, ViewChild  } from '@angular/core';
-import { Cart, QuoteService, TemplateService, CartItem } from '@apttus/ecommerce';
+import { Cart, QuoteService, TemplateService, CartItem, Quote } from '@apttus/ecommerce';
 import * as _ from 'lodash';
 import { ForceService } from 'ng-salesforce';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -31,6 +31,7 @@ export class SummaryComponent implements OnChanges {
   modalRef: BsModalRef;
   lineItem: CartItem;
   confirmationModal: BsModalRef;
+  generatedQuote: Quote;
 
   get itemCount(): number{
     let count = 0;
@@ -54,6 +55,7 @@ export class SummaryComponent implements OnChanges {
     this.state.requestQuoteLoading = true;
     this.quoteService.convertCartToQuote().subscribe(
       res => {
+        this.generatedQuote = res;
         this.state.requestQuoteLoading = false;
         this.confirmationModal = this.modalService.show(this.confirmationTemplate);
       },

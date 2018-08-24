@@ -2,7 +2,7 @@
 
 @import "./variables";
 @import "~bootstrap/scss/bootstrap";
-@import '~css-star-rating/scss/star-rating';
+
 .px-6{
     padding-left: 4rem;
     padding-right: 4rem;
@@ -82,21 +82,40 @@ div.slick-slide:focus{
 .strike-text{
     text-decoration: line-through;
 }
-// .carousel-caption{
-//     position: absolute;
-//     right: 10%;
-//     bottom: 20px;
-//     left: inherit;
-//     z-index: 10;
-//     padding-top: 20px;
-//     padding-bottom: 20px;
-//     text-align: center;
-//     width: 25%;
-//     bottom: 4rem !important;
-// }
-.carousel-item img{
-    width: 100%;
+star-rating{
+    margin-right: 0 !important;
 }
 .slick-prev:before, .slick-next:before, .slick-prev:hover:before, .slick-prev:focus:before, .slick-next:hover:before, .slick-next:focus:before{
     color: $primary !important;
+}
+
+.carousel-item img{
+    width: 100%;
+}
+.thumbnail{
+    max-width: 3rem;
+    max-height: 3rem;
+}
+typeahead-container {
+    padding-bottom: 0 !important;
+    .dropdown-item{
+        padding: 0;
+    }
+}
+
+apt-md-spinner.small svg{
+    height: 30px;
+    width: 30px;
+}
+dl{
+    dd, dt{
+        display: inline-block;
+    }
+    dt{
+        width: 33%;
+        vertical-align: top;
+    }
+    dd{
+        width: 66%;
+    }
 }

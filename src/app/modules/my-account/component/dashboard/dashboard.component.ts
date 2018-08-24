@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import Chart from 'chart.js';
 import { QuoteService, OrderService, PriceService, Price, LocalCurrencyPipe, Quote, Order } from '@apttus/ecommerce';
 import { SObject } from 'ng-salesforce';
@@ -11,7 +11,7 @@ import { CustomQuote } from '../quote-list/quote-list.component';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   @ViewChild('quoteChart') quoteChart: ElementRef;
   @ViewChild('orderChart') orderChart: ElementRef;
 
@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
   orderList: Array<Order>;
   quoteList: Array<Quote>;
   spent: Price;
+  subscription: any;
 
   constructor(private quoteService: QuoteService, private orderService: OrderService, private priceService: PriceService, private localCurrencyPipe: LocalCurrencyPipe) {
     quoteService.setType(CustomQuote);
@@ -27,7 +28,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.spent = new Price(this.localCurrencyPipe);
-    Observable.combineLatest(
+    this.subscription = Observable.combineLatest(
         this.quoteService.getMyQuotes(),
         this.orderService.getMyOrders(),
         this.orderService.aggregate(`CreatedDate = LAST_N_DAYS:7`),
@@ -48,6 +49,12 @@ export class DashboardComponent implements OnInit {
       });
 
     });
+  }
+
+  ngOnDestroy(){
+    if (this.subscription && this.subscription.unsubscribe){
+      this.subscription.unsubscribe();
+    }
   }
 
   renderPieWithData(element: ElementRef, records: Array<SObject>, field: string){
