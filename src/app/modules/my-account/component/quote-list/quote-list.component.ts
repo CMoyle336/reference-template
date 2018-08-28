@@ -13,12 +13,11 @@ export class QuoteListComponent implements OnInit {
   currentPage: number = 1;
   limit: number = 10;
 
-  quoteList: Array<CustomQuote>;
+  quoteList: Array<Quote>;
   quoteAggregate$: Observable<Array<any>>;
   actionConfiguration: object;
 
   constructor(private quoteService: QuoteService, private cartService: CartService, private router: Router) {
-    quoteService.setType(CustomQuote);
     this.actionConfiguration = new QuoteActions(this).actionConfiguration;
   }
 
@@ -29,7 +28,7 @@ export class QuoteListComponent implements OnInit {
 
   loadQuotes(page){
     this.quoteList = null;
-    this.quoteService.getMyQuotes(null, this.limit, ((page - 1) * this.limit)).subscribe((res: Array<CustomQuote>) => this.quoteList = res);
+    this.quoteService.getMyQuotes(null, this.limit, ((page - 1) * this.limit)).subscribe((res: Array<Quote>) => this.quoteList = res);
   }
 
   downloadPdf(){
@@ -60,8 +59,4 @@ export class QuoteListComponent implements OnInit {
 
   }
 
-}
-
-export class CustomQuote extends Quote{
-  Discounted_Price__c: number = 0;
 }

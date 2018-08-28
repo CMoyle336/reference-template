@@ -2,7 +2,7 @@
   <span class="navbar-brand">
     Order {{order?.Name}}
   </span>
-  <button class="btn btn-outline-primary">Reorder</button>
+  <button class="btn btn-outline-primary" [routerLink]="['/my-account', 'orders', order?.Name, 'reorder']">Reorder</button>
 </nav>
 
 <div *ngIf="order; else loading">

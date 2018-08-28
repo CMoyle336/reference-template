@@ -28,7 +28,7 @@
               "src/manifest.json"
             ],
             "styles": [
-              "./node_modules/roboto-fontface/css/roboto/sass/roboto-fontface-regular.scss",
+              "./node_modules/roboto-fontface/css/roboto/sass/roboto-fontface-light.scss",
               "src/styles.scss",
               "./node_modules/open-iconic/font/css/open-iconic-bootstrap.css",
               "./node_modules/slick-carousel/slick/slick.css",

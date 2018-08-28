@@ -1,0 +1,48 @@
+<nav class="navbar navbar-light bg-white d-flex justify-content-between">
+  <span class="navbar-brand">
+    Select Items
+  </span>
+  <button class="btn btn-primary" (click)="addToCart()" [ladda]="cartLoading" data-style="zoom-in">Add to Cart</button>
+</nav>
+
+<ng-container *ngIf="groupList?.length > 0; else loading">
+  <div *ngFor="let group of groupList" class="card mt-4">
+    <div class="card-body">
+      <h4 class="card-title">{{group}}</h4>
+      <small class="font-weight-bold">Your previously purchased products have been pre-selected</small>
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Status/Term</th>
+            <th scope="col">Item Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let productMap of productList[group]">
+            <th scope="row">{{productMap.product.Name}}</th>
+            <td>Ships December 2018</td>
+            <td>{{(productMap.product | ProductPricePipe:1 | async)?.totalPrice$ | async}}</td>
+            <td>
+              <apt-input-quantity min="0" default="0" [(ngModel)]="productMap.quantity"></apt-input-quantity>
+            </td>
+            <td>
+              <span [class.text-muted]="(productMap.product | ProductPricePipe:productMap.quantity | async)?.totalPrice === 0">{{(productMap.product
+                | ProductPricePipe:productMap.quantity | async)?.totalPrice$ | async}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="d-flex justify-content-center py-5">
+    <apt-md-spinner></apt-md-spinner>
+  </div>
+</ng-template>
+
+

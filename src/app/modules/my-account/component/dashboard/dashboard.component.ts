@@ -4,7 +4,6 @@ import { QuoteService, OrderService, PriceService, Price, LocalCurrencyPipe, Quo
 import { SObject } from 'ng-salesforce';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
-import { CustomQuote } from '../quote-list/quote-list.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +22,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   subscription: any;
 
   constructor(private quoteService: QuoteService, private orderService: OrderService, private priceService: PriceService, private localCurrencyPipe: LocalCurrencyPipe) {
-    quoteService.setType(CustomQuote);
   }
 
   ngOnInit() {

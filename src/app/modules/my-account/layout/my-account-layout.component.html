@@ -4,7 +4,8 @@
       <div class="card">
         <div class="card-body">
           <div class="media">
-            <img [src]="(me$ | async)?.SmallPhotoUrl | image : false" class="img-circle" width="45" height="45" />
+            <!-- <img [src]="(me$ | async)?.SmallPhotoUrl | image : false" class="img-circle" width="45" height="45" /> -->
+            <img [src]="null | image" class="img-circle" width="45" height="45" />
             <div class="media-body ml-3">
               <h5 class="my-0">{{(me$ | async)?.FirstName}} {{(me$ | async)?.LastName}}</h5>
               <small class="d-block">Last Login Date {{(me$ | async)?.LastLoginDate | date : 'short'}}</small>
