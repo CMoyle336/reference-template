@@ -15,13 +15,16 @@ export class ReorderLayoutComponent implements OnInit, OnDestroy {
   cart: Cart = new Cart();
   categoryTree: Array<Category>;
   order: Order;
+  newOrder: Order = new Order();
   group: string;
   productList: Object = {};
 
-  constructor(private orderService: OrderService, private route: ActivatedRoute, private categoryService: CategoryService, private cartService: CartService, private productService: ProductService, private cartItemService: CartItemService) { }
+  constructor(private orderService: OrderService, private route: ActivatedRoute, private categoryService: CategoryService, 
+              private cartService: CartService, private productService: ProductService, private cartItemService: CartItemService) { }
 
   ngOnInit() {
     this.order = new Order();
+    
     this.subList.push(this.route.params
       .flatMap(r => {
         this.group = r.group;
@@ -30,6 +33,7 @@ export class ReorderLayoutComponent implements OnInit, OnDestroy {
       .take(1)
       .subscribe(([categoryTree, order]) => {
         this.order = order;
+        this.newOrder.Apttus_Config2__PrimaryContactId__r = this.order.Apttus_Config2__PrimaryContactId__r;
         this.categoryTree = categoryTree;
         this.subList.push(this.productService.where(`ID <> NULL AND ID IN (SELECT Apttus_Config2__ProductId__c FROM Apttus_Config2__ProductClassification__c WHERE Apttus_Config2__ClassificationId__r.Apttus_Config2__PrimordialId__r.Name = {0})`, this.group)
           .map(productList => productList.map(product => {
@@ -81,6 +85,10 @@ export class ReorderLayoutComponent implements OnInit, OnDestroy {
     if(this.cart.Id)
       handleCart(this.cart);
     else
-      this.cartService.createNewCart(this.cart).subscribe(cart => handleCart(cart));
+      this.cartService.createNewCart(this.cart).take(1).subscribe(cart => handleCart(cart));
+  }
+
+  placeOrder(){
+    this.orderService.convertCartToOrder(this.newOrder, this.order.Apttus_Config2__PrimaryContactId__r, this.cart).subscribe(o => this.newOrder = o);
   }
 }

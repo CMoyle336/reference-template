@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-center align-items-center py-5" *ngIf="order">
+  <apt-md-spinner class="mt-5" *ngIf="!order?.Name"></apt-md-spinner>
+
+  <div *ngIf="order?.Name">
+    <h4 class="modal-title text-center">Order {{order.Name}} Confirmed</h4>
+    <div class="modal-body d-flex justify-content-center align-items-center confirmation py-5">
+      <span class="oi oi-check circle"></span>
+    </div>
+    <div class="modal-footer d-flex justify-content-center flex-wrap flex-md-nowrap">
+      <button class="btn btn-secondary d-block w-100 m-2" [routerLink]="['/']">Continue Shopping
+      </button>
+      <button class="btn btn-primary d-block w-100 m-2" [routerLink]="['/my-account', 'orders', order.Name]">Order
+        Details
+      </button>
+    </div>
+  </div>
+</div>
+
+

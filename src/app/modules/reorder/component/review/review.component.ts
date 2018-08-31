@@ -15,10 +15,9 @@ export class ReviewComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges() {
-    console.log(this.cart);
     const pendingItems = _.get(this.cart, 'Apttus_Config2__LineItems__r.records', []).filter(lineItem => lineItem.Apttus_Config2__PricingStatus__c === 'Pending').length;
-    const totalItems = _.get(this.cart, 'Apttus_Config2__LineItems__r.records', []);
-    this.completePercent = (pendingItems / totalItems) * 100;
+    const totalItems = _.get(this.cart, 'Apttus_Config2__LineItems__r.records', []).length;
+    this.completePercent = ((totalItems - pendingItems) / totalItems) * 100;
   }
 
 }

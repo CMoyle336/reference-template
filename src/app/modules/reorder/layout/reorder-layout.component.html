@@ -5,13 +5,13 @@
       <app-select-items [order]="order" [(cart)]="cart" [group]="group" [categoryTree]="categoryTree" [productList]="productList"></app-select-items>
     </wizard-step>
     <wizard-step [title]="'Enter Payment and Shipping'">
-      <app-payment [order]="order"></app-payment>
+      <app-payment [order]="newOrder"></app-payment>
     </wizard-step>
-    <wizard-step [title]="'Review Order'">
+    <wizard-step [title]="'Review Order'" (onNext)="placeOrder()">
       <app-review [cart]="cart"></app-review>
     </wizard-step>
-    <wizard-step [title]="'Confirmation'">
-      
+    <wizard-step [title]="'Confirmation'" [showNext]="false" [showPrev]="false">
+      <app-complete [order]="newOrder"></app-complete>
     </wizard-step>
   </form-wizard>
 

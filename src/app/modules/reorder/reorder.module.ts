@@ -7,8 +7,8 @@ import { StoreModule, PricingModule, CommerceModule } from '@apttus/ecommerce';
 import { FormWizardModule } from 'angular2-wizard';
 import { SelectItemsComponent } from './component/select-items/select-items.component';
 import { PaymentComponent } from './component/payment/payment.component';
-import { CardFormComponent } from '../cart/component/card-form/card-form.component';
 import { ReviewComponent } from './component/review/review.component';
+import { CompleteComponent } from './component/complete/complete.component';
 
 @NgModule({
   imports: [
@@ -19,6 +19,6 @@ import { ReviewComponent } from './component/review/review.component';
     CommerceModule,
     FormWizardModule
   ],
-  declarations: [ReorderLayoutComponent, SelectItemsComponent, PaymentComponent, CardFormComponent, ReviewComponent]
+  declarations: [ReorderLayoutComponent, SelectItemsComponent, PaymentComponent, ReviewComponent, CompleteComponent]
 })
 export class ReorderModule { }
