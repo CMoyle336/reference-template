@@ -22,7 +22,6 @@ import { ProductCatalogComponent } from './component/product-catalog/product-cat
 import { SalesforceModule } from 'ng-salesforce';
 import { OrderDetailComponent } from './component/order-detail/order-detail.component';
 import { QuoteDetailComponent } from './component/quote-detail/quote-detail.component';
-import { ReorderComponent } from './component/reorder/reorder.component';
 
 
 @NgModule({
@@ -39,7 +38,7 @@ import { ReorderComponent } from './component/reorder/reorder.component';
     BsDropdownModule.forRoot(),
     PaginationModule.forRoot()
   ],
-  declarations: [MyAccountLayoutComponent, OrderListComponent, DashboardComponent, QuoteListComponent, WishlistsComponent, AddressBookComponent, SettingsComponent, CartListComponent, ProductCatalogComponent, OrderDetailComponent, QuoteDetailComponent, ReorderComponent],
+  declarations: [MyAccountLayoutComponent, OrderListComponent, DashboardComponent, QuoteListComponent, WishlistsComponent, AddressBookComponent, SettingsComponent, CartListComponent, ProductCatalogComponent, OrderDetailComponent, QuoteDetailComponent],
   exports: []
 })
 export class MyAccountModule { }

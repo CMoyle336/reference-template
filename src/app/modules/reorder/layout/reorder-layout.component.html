@@ -1,0 +1,20 @@
+<div class="container-fluid py-2">
+
+  <form-wizard>
+    <wizard-step [title]="'Select Items'" (onNext)="onItemsAdd()">
+      <app-select-items [order]="order" [(cart)]="cart" [group]="group" [categoryTree]="categoryTree" [productList]="productList"></app-select-items>
+    </wizard-step>
+    <wizard-step [title]="'Enter Payment and Shipping'">
+      <app-payment [order]="order"></app-payment>
+    </wizard-step>
+    <wizard-step [title]="'Review Order'">
+      <app-review [cart]="cart"></app-review>
+    </wizard-step>
+    <wizard-step [title]="'Confirmation'">
+      
+    </wizard-step>
+  </form-wizard>
+
+  
+
+</div>

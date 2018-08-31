@@ -2,7 +2,6 @@
   <span class="navbar-brand">
     Order {{order?.Name}}
   </span>
-  <button class="btn btn-outline-primary" [routerLink]="['/my-account', 'orders', order?.Name, 'reorder']">Reorder</button>
 </nav>
 
 <div *ngIf="order; else loading">
@@ -65,7 +64,11 @@
 
   <div class="row mt-3">
     <div class="col-12">
-      <div class="card p-0">
+      <div class="card p-0" *ngFor="let group of productGroups">
+        <div class="d-flex justify-content-between p-2 align-items-center">
+          <h4 class="font-weight-bold m-0">{{group}}</h4>
+          <button class="btn btn-primary" [routerLink]="['/reorder', group, order?.Name]">Buy Now</button>
+        </div>
         <table class="table">
           <thead>
             <tr>
@@ -75,20 +78,20 @@
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngFor="let lineItem of order?.Apttus_Config2__OrderLineItems__r?.records">
-              <tr *ngIf="lineItem.Apttus_Config2__LineType__c === 'Product/Service'">
+            <ng-container *ngFor="let product of productList[group]">
+              <tr>
                 <th scope="row">
                   <div class="media align-items-stretch">
-                    <img class="mr-3" [src]="lineItem.Apttus_Config2__ProductId__r.Apttus_Config2__IconId__c | image" width="75" height="60"
+                    <img class="mr-3" [src]="product.Apttus_Config2__IconId__c | image" width="75" height="60"
                       alt="Generic placeholder image">
                     <div class="media-body d-flex flex-column justify-content-between">
                       <div>
                         <h6 class="m-0">
-                          <a href="javascript:void(0)" [routerLink]="['/product', lineItem.Apttus_Config2__ProductId__r.ProductCode]">{{lineItem.Apttus_Config2__ProductId__r?.Name}}</a>
+                          <a href="javascript:void(0)" [routerLink]="['/product', product.ProductCode]">{{product?.Apttus_Config2__Categories__r.records[0].Apttus_Config2__ClassificationId__r?.Apttus_Config2__Label__c}}</a>
                         </h6>
                         <small>
-                          <strong>Product Code:</strong>&nbsp;{{lineItem.Apttus_Config2__ProductId__r.ProductCode}}
-                          <a class="d-block mt-1" href="javascript:void(0)" *ngIf="lineItem.Apttus_Config2__HasOptions__c" (click)="openModal(configurationTemplate, lineItem)">
+                          <strong>Product Code:</strong>&nbsp;{{product.ProductCode}}
+                          <a class="d-block mt-1" href="javascript:void(0)" *ngIf="lineItemMap[product.Id][0]?.Apttus_Config2__HasOptions__c" (click)="openModal(configurationTemplate, lineItemMap[product.Id])">
                             <span class="oi oi-wrench mr-1"></span>Configuration
                           </a>
                         </small>
@@ -96,9 +99,9 @@
                     </div>
                   </div>
                 </th>
-                <td>{{(lineItem | CartItemPricePipe | async)?.totalPrice$ | async}}</td>
+                <td>{{(lineItemMap[product.Id][0] | CartItemPricePipe | async)?.totalPrice$ | async}}</td>
                 <td class="text-center">
-                  <span class="badge badge-light p-3 text-muted">{{lineItem.Apttus_Config2__Quantity__c}}</span>
+                  <span class="badge badge-light p-3 text-muted">{{lineItemMap[product.Id][0]?.Apttus_Config2__Quantity__c}}</span>
                 </td>
               </tr>
             </ng-container>

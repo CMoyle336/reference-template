@@ -24,7 +24,7 @@
 
           <div class="mt-4 d-flex justify-content-between flex-wrap align-items-center">
             <h3 class="d-flex justify-content-start align-items-center">
-              <price [product]="product"></price>
+              <apt-price [record]="product"></apt-price>
             </h3>
             <apt-add-to-cart [product]="product" class="w-50" rollbackOnFail="false" [disabled]="replacementRules?.length > 0"></apt-add-to-cart>
           </div>

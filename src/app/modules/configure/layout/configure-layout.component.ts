@@ -120,7 +120,7 @@ export class ConfigureLayoutComponent implements OnInit {
     } as CartProductForm;});
     Observable.combineLatest(
       this.cartService.addProductToCart(this.product, 1, false, this.productAttributeMap.map(p => p.attributeValue), this.productOptionList, true, false),
-      this.cartService.bulkAddProductToCart(adt, true)
+      this.cartService.bulkAddProductToCart(adt)
     ).subscribe(
       r => {
         this.loading = false;

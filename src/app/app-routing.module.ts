@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'search/:query', loadChildren: './modules/product-list/product-list.module#ProductListModule', canActivate: [RouteGuard] },
   { path: 'cart', loadChildren: './modules/cart/cart.module#CartModule', canActivate: [RouteGuard] },
   { path: 'my-account', loadChildren: './modules/my-account/my-account.module#MyAccountModule', canActivate: [RouteGuard, AuthGuard]},
+  { path: 'reorder', loadChildren: './modules/reorder/reorder.module#ReorderModule', canActivate: [RouteGuard, AuthGuard] },
   { path: '**', redirectTo: '' }
 ];
 

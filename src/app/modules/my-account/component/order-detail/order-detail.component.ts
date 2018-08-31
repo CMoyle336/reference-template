@@ -14,7 +14,13 @@ export class OrderDetailComponent implements OnInit {
   modalRef: BsModalRef;
   order: Order;
   selectedLineItem: OrderLineItem;
-  
+  productList = {};
+  lineItemMap = {};
+
+  get productGroups(){
+    return Object.keys(this.productList);
+  }
+
   constructor(private route: ActivatedRoute, private orderService: OrderService, private modalService: BsModalService, private productService: ProductService) { }
 
   ngOnInit() {
@@ -22,6 +28,13 @@ export class OrderDetailComponent implements OnInit {
       .flatMap(r => this.orderService.getOrderByName(r.orderId))
       .subscribe(order => {
         this.order = order;
+        this.productService.where(`ID IN ({0})`, ProductService.arrayToCsv(_.get(this.order, 'Apttus_Config2__OrderLineItems__r.records', [])
+          .filter(p => p.Apttus_Config2__LineType__c === 'Product/Service')
+          .map(o => o.Apttus_Config2__ProductId__c)))
+          .subscribe(y => {
+            this.productList = _.groupBy(y, 'Digital_Product_Family__c');
+            this.lineItemMap = _.groupBy(_.get(this.order, 'Apttus_Config2__OrderLineItems__r.records', []), 'Apttus_Config2__ProductId__c');
+          });
       });
   }
 

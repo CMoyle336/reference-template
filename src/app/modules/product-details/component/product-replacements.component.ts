@@ -10,7 +10,7 @@ import { Product } from '@apttus/ecommerce';
         <div class="media-body">
           <div class="d-flex justify-content-between">
             <h6 class="font-weight-bold mb-0">{{product.Name}}</h6>
-            <price [product]="product"></price>
+            <apt-price [record]="product"></apt-price>
           </div>
           <small class="d-block">{{product.ProductCode}}</small>
           <button class="btn btn-link btn btn-link p-0 mx-0 mt-2" [routerLink]="['/product', product.ProductCode]">

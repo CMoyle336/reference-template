@@ -1,0 +1,62 @@
+<div *ngIf="order" class="container py-4">
+  <h4 class="mb-3 text-muted">Shipping Address</h4>
+  <div class="row mt-3">
+    <div class="col-md-6 mb-3">
+      <label>First name</label>
+      <input type="text" class="form-control" placeholder="" value="" required="" [ngModel]="order.Apttus_Config2__PrimaryContactId__r?.FirstName"
+        name="firstName" [readonly]="order.Apttus_Config2__PrimaryContactId__r?.Id != null">
+      <div class="invalid-feedback">
+        Valid first name is required.
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label>Last name</label>
+      <input type="text" class="form-control" placeholder="" value="" required="" [ngModel]="order.Apttus_Config2__PrimaryContactId__r?.LastName"
+        name="lastName" [readonly]="order.Apttus_Config2__PrimaryContactId__r?.Id != null">
+      <div class="invalid-feedback">
+        Valid last name is required.
+      </div>
+    </div>
+  </div>
+  
+  <div class="mb-3">
+    <label>Email
+      <span class="text-muted">(Optional)</span>
+    </label>
+    <input type="email" class="form-control" placeholder="you@example.com" [ngModel]="order.Apttus_Config2__PrimaryContactId__r?.Email"
+      name="email" [readonly]="order.Apttus_Config2__PrimaryContactId__r?.Id != null">
+    <div class="invalid-feedback">
+      Please enter a valid email address for shipping updates.
+    </div>
+  </div>
+  
+  <apt-address [(ngModel)]="order.Apttus_Config2__PrimaryContactId__r" type="Billing" name="billingAddress"></apt-address>
+
+  <h4 class="my-3 text-muted">Payment</h4>
+  <div>
+    <div class="d-block my-3">
+      <div class="custom-control custom-radio">
+        <input name="paymentState" type="radio" id="credit" class="custom-control-input" [value]="'CARD'" checked="" required=""
+          [(ngModel)]="paymentState">
+        <label class="custom-control-label" for="credit">Credit card</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input name="paymentState" type="radio" id="debit" class="custom-control-input" required="">
+        <label class="custom-control-label" for="debit">Debit card</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input name="paymentState" type="radio" id="invoice" class="custom-control-input" [value]="'INVOICE'" [(ngModel)]="paymentState">
+        <label class="custom-control-label" for="invoice">PO Number</label>
+      </div>
+    </div>
+    <!-- Credit Card-->
+    <app-card-form [card]="card" *ngIf="paymentState === 'CARD'"></app-card-form>
+  
+    <!-- Invoice -->
+    <div class="form-group" *ngIf="paymentState === 'INVOICE'">
+      <label for="poNumber">PO Number</label>
+      <input type="text" class="form-control" id="poNumber" placeholder="Enter a purchase order number..." [(ngModel)]="order.Apttus_Config2__PONumber__c"
+        name="poNumber">
+    </div>
+  </div>
+</div>
