@@ -57,7 +57,7 @@ export class ConfigureLayoutComponent implements OnInit {
     this.route.params
       .filter(params => params['productCode'] != null)
       .map(params => params['productCode'])
-      .flatMap(productCode => this.productService.getProductByCode([productCode]))
+      .flatMap(productCode => this.productService.getProductsByCode([productCode]))
       .map(res => res[0])
       .filter(product => product != null)
       .distinctUntilKeyChanged('Id')

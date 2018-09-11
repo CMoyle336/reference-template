@@ -37,7 +37,7 @@ export class ItemConfigurationSummaryComponent implements OnChanges {
     if (this.parent instanceof Order) {
       this.type = 'Order';
       lineItems = _.get(this.parent, 'Apttus_Config2__OrderLineItems__r.records', []);
-      this.productService.getProductByCode([this.item.Apttus_Config2__ProductId__r.ProductCode]).take(1).map(res => res[0]).subscribe(p => {
+      this.productService.getProductsByCode([this.item.Apttus_Config2__ProductId__r.ProductCode]).take(1).map(res => res[0]).subscribe(p => {
         this.selectedProduct = p;
       });
       this.productAttributeValue = (<OrderLineItem>this.item).Apttus_Config2__DerivedFromId__r.Apttus_Config2__AttributeValueId__r;
@@ -60,7 +60,7 @@ export class ItemConfigurationSummaryComponent implements OnChanges {
     const options = lineItems.filter(r => r.Apttus_Config2__LineNumber__c === this.item.Apttus_Config2__PrimaryLineNumber__c && r.Apttus_Config2__LineType__c === 'Option');
     this.optionList = _.groupBy(options, 'Apttus_Config2__ProductOptionId__r.Apttus_Config2__ProductOptionGroupId__r.Apttus_Config2__OptionGroupId__r.Apttus_Config2__Label__c');
 
-    this.productService.getProductByCode([this.item.Apttus_Config2__ProductId__r.ProductCode])
+    this.productService.getProductsByCode([this.item.Apttus_Config2__ProductId__r.ProductCode])
       .map(res => res[0])
       .subscribe(product => {
         this.selectedProduct = product;

@@ -37,7 +37,7 @@ export class ProductDetailsComponent implements OnInit {
         this.product = null;
         this.rules = null;
         this.replacementRules = null;
-        return this.productService.getProductByCode([productCode])
+        return this.productService.getProductsByCode([productCode])
       })
       .map(res => res[0])
       .filter(product => product != null)

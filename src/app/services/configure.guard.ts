@@ -10,7 +10,7 @@ export class ConfigureGuard implements CanActivate {
     constructor(private router: Router, private productService: ProductService, private constraintRuleService: ConstraintRuleService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        return this.productService.getProductByCode([route.params.productCode])
+        return this.productService.getProductsByCode([route.params.productCode])
             .map(res => res[0])
             .filter(product => product != null)
             .distinctUntilKeyChanged('Id')
