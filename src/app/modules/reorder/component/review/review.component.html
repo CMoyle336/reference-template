@@ -7,7 +7,14 @@
     </div>
   </div>
   
-
+  <div class="d-flex justify-content-end text-right">
+    <dl>
+      <ng-container *ngFor="let group of cart?.Apttus_Config2__SummaryGroups__r?.records">
+        <dt>{{group.Name}}</dt>
+        <dd>{{group.Apttus_Config2__NetPrice__c | localCurrency | async}}</dd>
+      </ng-container>
+    </dl>
+  </div>
   <table class="table" *ngIf="!cart?.Apttus_Config2__IsPricePending__c">
     <thead>
       <tr>
@@ -22,8 +29,6 @@
         <tr *ngIf="lineItem.Apttus_Config2__LineType__c === 'Product/Service'">
           <th scope="row">
             <div class="media align-items-stretch">
-              <img class="mr-3" [src]="lineItem.Apttus_Config2__ProductId__r.Apttus_Config2__IconId__c | image" width="75" height="60"
-                alt="Generic placeholder image">
               <div class="media-body d-flex flex-column justify-content-between">
                 <div>
                   <h6 class="m-0">

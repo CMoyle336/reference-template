@@ -9,6 +9,8 @@ import { SelectItemsComponent } from './component/select-items/select-items.comp
 import { PaymentComponent } from './component/payment/payment.component';
 import { ReviewComponent } from './component/review/review.component';
 import { CompleteComponent } from './component/complete/complete.component';
+import { CategoryPriceComponent } from './component/category-price/category-price.component';
+import { ComponentModule } from '../../components/component.module';
 
 @NgModule({
   imports: [
@@ -17,8 +19,9 @@ import { CompleteComponent } from './component/complete/complete.component';
     StoreModule,
     PricingModule,
     CommerceModule,
-    FormWizardModule
+    FormWizardModule,
+    ComponentModule
   ],
-  declarations: [ReorderLayoutComponent, SelectItemsComponent, PaymentComponent, ReviewComponent, CompleteComponent]
+  declarations: [ReorderLayoutComponent, SelectItemsComponent, PaymentComponent, ReviewComponent, CompleteComponent, CategoryPriceComponent]
 })
 export class ReorderModule { }

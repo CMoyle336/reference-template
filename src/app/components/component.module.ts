@@ -16,6 +16,7 @@ import { OutputFieldComponent } from './output-field/output-field.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { ItemConfigurationSummaryComponent } from './item-configuration-summary/item-configuration-summary.component';
+import { PriceComponent } from './price-component/price-component.component';
 
 @NgModule({
   imports: [
@@ -39,14 +40,16 @@ import { ItemConfigurationSummaryComponent } from './item-configuration-summary/
     LaddaModule,
     FooterComponent,
     OutputFieldComponent,
-    ItemConfigurationSummaryComponent
+    ItemConfigurationSummaryComponent,
+    PriceComponent
   ],
   declarations: [
     HeaderComponent,
     NavAccountComponent,
     FooterComponent,
     OutputFieldComponent,
-    ItemConfigurationSummaryComponent
+    ItemConfigurationSummaryComponent,
+    PriceComponent
   ]
 })
 export class ComponentModule { }

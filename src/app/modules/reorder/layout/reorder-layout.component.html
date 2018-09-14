@@ -2,7 +2,7 @@
 
   <form-wizard>
     <wizard-step [title]="'Select Items'" (onNext)="onItemsAdd()">
-      <app-select-items [order]="order" [(cart)]="cart" [group]="group" [categoryTree]="categoryTree" [productList]="productList"></app-select-items>
+      <app-select-items [order]="order" [(cart)]="cart" [group]="group" [categoryTree]="categoryTree"></app-select-items>
     </wizard-step>
     <wizard-step [title]="'Enter Payment and Shipping'">
       <app-payment [order]="newOrder"></app-payment>
