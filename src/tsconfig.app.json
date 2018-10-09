@@ -9,4 +9,17 @@
     "src/test.ts",
     "**/*.spec.ts"
   ]
+
+
+  // "include": [
+  //   "./**/*.ts",
+  //   "../node_modules/angular2-wizard/index.ts",
+  //   "../node_modules/angular2-wizard/src/**/*.ts"
+  // ],
+  // "exclude": [
+  //   "src/test.ts",
+  //   "**/*.spec.ts",
+  //   "../node_modules/angular2-wizard/src/**/*.spec.ts"
+  // ]
+
 }

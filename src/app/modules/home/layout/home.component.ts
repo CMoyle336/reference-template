@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.storefront$ = this.storefrontService.getStorefront();
     // this.categoryService.where(`Name = 'Compressors' OR Name = 'Parts & Accessories'`).subscribe(categories => {
-    this.categoryService.queryBuilder(`ID <> NULL`, 2).subscribe(categories => {
+    this.categoryService.queryBuilder(`Name LIKE '%Checkpoint%'`, 2).subscribe(categories => {
       this.categories = categories;
       if(categories && categories.length === 2){
         this.productListA$ = this.productService.getProductsByCategory(categories[0].Id, 5, 0);

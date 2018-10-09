@@ -37,22 +37,12 @@
               <div class="py-3">
                 <p [innerHTML]="product?.Description" class="p-2"></p>
               </div>
-
-              <!-- <pdp-rules [productList]="(includedProducts$ | async)" *ngIf="(includedProducts$ | async)?.length > 0" title=""
-                  type="Inclusion"></pdp-rules>
-                <pdp-rules [productList]="(recommendedProducts$ | async)" *ngIf="(recommendedProducts$ | async)?.length > 0" title=""
-                  type="Recommendation"></pdp-rules> -->
             </tab>
             <tab heading="Features">
               <div class="py-3">
                 <pdp-tab-features [product]="product"></pdp-tab-features>
               </div>
             </tab>
-            <!-- <tab heading="Product Reviews">
-              <div class="py-3">
-                <apt-product-reviews [productId]="product.Id"></apt-product-reviews>
-              </div>
-            </tab> -->
             <tab heading="Replacement Products" *ngIf="replacementRules?.length > 0">
               <apt-product-replacements [productList]="replacementProducts$ | async"></apt-product-replacements>
             </tab>

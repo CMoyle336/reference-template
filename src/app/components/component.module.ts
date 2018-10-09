@@ -17,6 +17,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { ItemConfigurationSummaryComponent } from './item-configuration-summary/item-configuration-summary.component';
 import { PriceComponent } from './price-component/price-component.component';
+import { MyMiniProfileComponent } from './my-mini-profile/my-mini-profile.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { PriceComponent } from './price-component/price-component.component';
     FooterComponent,
     OutputFieldComponent,
     ItemConfigurationSummaryComponent,
-    PriceComponent
+    PriceComponent,
+    MyMiniProfileComponent
   ]
 })
 export class ComponentModule { }

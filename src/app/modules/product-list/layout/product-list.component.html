@@ -12,7 +12,9 @@
         <pl-price-tier [data]="(searchResults$ | async)?.aggregateTotal" [tier]="priceTier" class="d-block mb-2" (onPriceChange)="onPriceTierChange($event)"></pl-price-tier>
         <!-- <pl-field-filter [fieldName]="'APTSCU_Horsepower__c'" (fieldValueChange)="onFieldFilter($event)" class="d-block mb-2"></pl-field-filter> -->
         <pl-field-filter [fieldName]="'Family'" (fieldValueChange)="onFieldFilter($event)" class="d-block mb-2"></pl-field-filter>
-        <pl-field-filter [fieldName]="'Apttus_Config2__ProductType__c'" (fieldValueChange)="onFieldFilter($event)" class="d-block"></pl-field-filter>
+        <pl-field-filter [fieldName]="'Apttus_Config2__ProductType__c'" (fieldValueChange)="onFieldFilter($event)" class="d-block mb-2"></pl-field-filter>
+        <pl-field-filter [fieldName]="'Digital_Product_Family__c'" (fieldValueChange)="onFieldFilter($event)" class="d-block"></pl-field-filter>
+
       </div>
     </div>
     <div class="col-12 col-lg-9">

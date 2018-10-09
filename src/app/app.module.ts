@@ -12,6 +12,8 @@ import { RouteGuard } from './services/route.guard';
 import { AuthGuard } from './services/auth.guard';
 import { ConfigureGuard } from './services/configure.guard';
 
+import { ForceService } from './services/force.service';
+
 // Register locale data
 import localeMx from '@angular/common/locales/es-MX';
 import localeMxExtra from '@angular/common/locales/extra/es-MX';
@@ -41,7 +43,7 @@ export function _window(): any {
     CommerceModule.forRoot('tr'),
     ComponentModule
   ],
-  providers: [RouteGuard, AuthGuard, ConfigureGuard],
+  providers: [RouteGuard, AuthGuard, ConfigureGuard, ForceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

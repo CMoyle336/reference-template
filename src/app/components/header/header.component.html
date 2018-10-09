@@ -4,8 +4,8 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <button class="navbar-brand btn btn-link d-none d-md-inline-block" [routerLink]="['/']" *ngIf="(storefront$ | async)?.Logo__c; else text">
-      <img [src]="(storefront$ | async)?.Logo__c | image" [alt]="(storefront$ | async)?.Name"/>
+    <button class="navbar-brand btn btn-link d-none d-md-inline-block" [routerLink]="['/']" *ngIf="(storefront$ | async)?.Apttus_WebStore__Logo__c; else text">
+      <img [src]="(storefront$ | async)?.Apttus_WebStore__Logo__c | image" [alt]="(storefront$ | async)?.Name"/>
     </button>
     <ng-template #text>
       <button class="navbar-brand btn btn-link" [routerLink]="['/']">{{(storefront$ | async)?.Name}}</button>
@@ -99,7 +99,7 @@
   </ng-template>
 </ng-template> -->
 
-<apt-mini-profile #profile></apt-mini-profile>
+<app-my-mini-profile #profile></app-my-mini-profile>
 
 <div bsModal #menuModal="bs-modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="dialog-sizes-name1">
   <div class="modal-dialog modal-lg menu">

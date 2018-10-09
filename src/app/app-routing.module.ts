@@ -13,8 +13,11 @@ const routes: Routes = [
   { path: 'cart', loadChildren: './modules/cart/cart.module#CartModule', canActivate: [RouteGuard] },
   { path: 'my-account', loadChildren: './modules/my-account/my-account.module#MyAccountModule', canActivate: [RouteGuard, AuthGuard]},
   { path: 'reorder', loadChildren: './modules/reorder/reorder.module#ReorderModule', canActivate: [RouteGuard, AuthGuard] },
+  { path: 'contact', loadChildren: './modules/contact/contact.module#ContactModule', canActivate: [RouteGuard]},
   { path: '**', redirectTo: '' }
 ];
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: true })],

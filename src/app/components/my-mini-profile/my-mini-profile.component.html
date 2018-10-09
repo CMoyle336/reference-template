@@ -1,0 +1,105 @@
+<ng-template #template>
+  <form *ngIf="loginState === 'LOGIN'" (ngSubmit)="doLogin()">
+    <div class="modal-header">
+      <h5 class="modal-title" id="loginModalLabel">My New Login Modal</h5>
+      <button type="button" class="close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="email">Username</label>
+        <input type="email" class="form-control" id="username" name="username" placeholder="Enter Username" [(ngModel)]="username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" [(ngModel)]="password">
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+      </div>
+      <small class="text-danger animated fadeIn" *ngIf="loginMessage">{{loginMessage}}</small>
+    </div>
+    <div class="modal-footer d-flex justify-content-start">
+      <button class="btn btn-link" type="button" (click)="loginState = 'REGISTER'">Register</button>
+      |
+      <button class="btn btn-link" type="button" (click)="loginState = 'RESET-PASSWORD'">Forgot Password</button>
+      <button type="submit" class="btn btn-primary ml-auto" [ladda]="loading">Submit</button>
+    </div>
+  </form>
+
+  <form *ngIf="loginState === 'REGISTER'" (ngSubmit)="doRegister()">
+    <div class="modal-header">
+      <h5 class="modal-title" id="loginModalLabel">Register</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" [(ngModel)]="user.Email" class="form-control" name="email" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" id="firstName" [(ngModel)]="user.FirstName" name="firstName"
+          placeholder="First Name">
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" placeholder="Last Name" [(ngModel)]="user.LastName" name="lastName" id="lastName">
+      </div>
+      <small class="text-danger animated fadeIn" *ngIf="registerMessage">{{registerMessage}}</small>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="loginState = 'LOGIN'">Go Back</button>
+      <button type="submit" class="btn btn-primary" [ladda]="loading">Submit</button>
+    </div>
+  </form>
+
+  <form *ngIf="loginState === 'RESET-PASSWORD'" (ngSubmit)="doResetPassword()">
+    <div class="modal-header">
+      <h5 class="modal-title">Reset Password</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Having trouble logging in?</p>
+      <ul>
+        <li>Usernames are in the form of an email address.</li>
+        <li>Passwords are case sensitive.</li>
+      </ul>
+      <p>To reset your password, enter your username.</p>
+      <div class="form-group">
+        <label for="resetUsername">Username</label>
+        <input type="email" [(ngModel)]="resetUsername" class="form-control" name="resetUsername" placeholder="Username">
+        <small id="emailHelp" class="form-text text-muted">To reset your password, enter your username.</small>
+      </div>
+      <small class="text-danger animated fadeIn" *ngIf="resetMessage">{{resetMessage}}</small>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="loginState = 'LOGIN'">Go Back</button>
+      <button type="submit" class="btn btn-primary" type="submit" [ladda]="loading">Submit</button>
+    </div>
+  </form>
+
+  <div *ngIf="loginState === 'RESET-CONFIRM'">
+    <div class="modal-header">
+      <h5 class="modal-title">Password Reset</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>We’ve sent you an email with a link to finish resetting your password.</p>
+      <p>Can’t find the email? Try checking your spam folder.</p>
+      <p>If you still can’t log in, try again or contact your Salesforce administrator.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="loginState = 'LOGIN'">Go Back</button>
+    </div>
+  </div>
+</ng-template>
